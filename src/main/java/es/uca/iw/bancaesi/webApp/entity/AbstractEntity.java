@@ -1,4 +1,4 @@
-package com.example.application.data.entity;
+package es.uca.iw.bancaesi.webApp.entity;
 
 import java.util.UUID;
 import javax.persistence.GeneratedValue;

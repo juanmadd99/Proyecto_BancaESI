@@ -1,4 +1,4 @@
-package com.example.application;
+package es.uca.iw.bancaesi.webApp;
 
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.page.AppShellConfigurator;

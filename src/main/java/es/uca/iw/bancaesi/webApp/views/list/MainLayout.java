@@ -1,4 +1,4 @@
-package com.example.application.views.list;
+package es.uca.iw.bancaesi.webApp.views.list;
 
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -32,9 +32,9 @@ public class MainLayout extends AppLayout {
 
     private Tabs getTabs() {
         Tabs tabs = new Tabs();
-        tabs.add(createTab(VaadinIcon.DASHBOARD, "Dashboard"),
+        tabs.add(createTab(VaadinIcon.DASHBOARD, "Inicio"),
                 createTab(VaadinIcon.CART, "Orders"),
-                createTab(VaadinIcon.USER_HEART, "Customers"),
+                createTab(VaadinIcon.USER_HEART, "Login"),
                 createTab(VaadinIcon.PACKAGE, "Products"),
                 createTab(VaadinIcon.RECORDS, "Documents"),
                 createTab(VaadinIcon.LIST, "Tasks"),
@@ -51,10 +51,9 @@ public class MainLayout extends AppLayout {
                 .set("padding", "var(--lumo-space-xs)");
 
         RouterLink link = new RouterLink();
-        link.add(icon, new Span(viewName));
-        // Demo has no routes
-        link.setRoute(LoginView.class);
-        link.setTabIndex(-1);
+	        link.add(icon, new Span(viewName));
+	        //link.setRoute(Chat.class);
+	        link.setTabIndex(1);
 
         return new Tab(link);
     }

@@ -1,8 +1,9 @@
-package com.example.application.data.repository;
+package es.uca.iw.bancaesi.webApp.data.repository;
 
-import com.example.application.data.entity.Company;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import es.uca.iw.bancaesi.webApp.entity.Company;
 
 public interface CompanyRepository extends JpaRepository<Company, UUID> {
 

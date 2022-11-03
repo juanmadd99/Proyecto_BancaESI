@@ -1,4 +1,4 @@
-package com.example.application.views.list;
+package es.uca.iw.bancaesi.webApp.views.list;
 
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;

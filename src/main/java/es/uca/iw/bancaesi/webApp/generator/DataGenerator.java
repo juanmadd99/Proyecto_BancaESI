@@ -1,14 +1,16 @@
-package com.example.application.data.generator;
+package es.uca.iw.bancaesi.webApp.generator;
 
-import com.example.application.data.entity.Company;
-import com.example.application.data.entity.Contact;
-import com.example.application.data.entity.Status;
-import com.example.application.data.repository.CompanyRepository;
-import com.example.application.data.repository.ContactRepository;
-import com.example.application.data.repository.StatusRepository;
 import com.vaadin.exampledata.DataType;
 import com.vaadin.exampledata.ExampleDataGenerator;
 import com.vaadin.flow.spring.annotation.SpringComponent;
+
+import es.uca.iw.bancaesi.webApp.data.repository.CompanyRepository;
+import es.uca.iw.bancaesi.webApp.data.repository.ContactRepository;
+import es.uca.iw.bancaesi.webApp.data.repository.StatusRepository;
+import es.uca.iw.bancaesi.webApp.entity.Company;
+import es.uca.iw.bancaesi.webApp.entity.Contact;
+import es.uca.iw.bancaesi.webApp.entity.Status;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
