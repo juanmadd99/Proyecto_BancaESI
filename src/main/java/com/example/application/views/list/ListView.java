@@ -8,7 +8,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @PageTitle("list")
-@Route(value = "")
+@Route(value = "",layout = MainLayout.class)
 public class ListView extends VerticalLayout {
 
     public ListView() {
@@ -19,7 +19,7 @@ public class ListView extends VerticalLayout {
         add(img);
 
         add(new H2("ESI Bank"));
-        add(new Paragraph("It’s a place where you can grow your own UI 🤗"));
+        add(new Paragraph("Login"));
 
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);
