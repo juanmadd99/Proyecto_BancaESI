@@ -1,4 +1,4 @@
-package es.uca.iw.bancaesi.webApp.entity;
+package com.example.application.data.entity;
 
 import javax.persistence.Entity;
 

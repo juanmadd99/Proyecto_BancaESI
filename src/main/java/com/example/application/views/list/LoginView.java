@@ -1,4 +1,4 @@
-package es.uca.iw.bancaesi.webApp.views.list;
+package com.example.application.views.list;
 
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.html.Div;
@@ -6,9 +6,9 @@ import com.vaadin.flow.router.ParentLayout;
 import com.vaadin.flow.router.Route;
 
 @Route(value = "login",layout = MainLayout.class)
-public class Login extends Div {
+public class LoginView extends Div {
 
-    public Login() {
+    public LoginView() {
         // Demo purposes only
         getStyle().set("background-color", "var(--lumo-contrast-5pct)")
                 .set("display", "flex").set("justify-content", "center")
@@ -22,4 +22,5 @@ public class Login extends Div {
         // documentation
         loginForm.getElement().setAttribute("no-autofocus", "");
     }
+
 }
