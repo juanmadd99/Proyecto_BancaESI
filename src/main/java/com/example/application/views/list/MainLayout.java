@@ -32,18 +32,14 @@ public class MainLayout extends AppLayout {
 
     private Tabs getTabs() {
         Tabs tabs = new Tabs();
-        tabs.add(createTab(VaadinIcon.DASHBOARD, "Dashboard"),
-                createTab(VaadinIcon.CART, "Orders"),
-                createTab(VaadinIcon.USER_HEART, "Customers"),
-                createTab(VaadinIcon.PACKAGE, "Products"),
-                createTab(VaadinIcon.RECORDS, "Documents"),
-                createTab(VaadinIcon.LIST, "Tasks"),
-                createTab(VaadinIcon.CHART, "Analytics"));
+        tabs.add(createTab(VaadinIcon.DASHBOARD, "Login", LoginView.class),
+                createTab(VaadinIcon.CART, "Mi cuenta", PerfilView.class),
+                createTab(VaadinIcon.USER_HEART, "Mis productos", LoginView.class));
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
         return tabs;
     }
 
-    private Tab createTab(VaadinIcon viewIcon, String viewName) {
+    private Tab createTab(VaadinIcon viewIcon, String viewName, Class className) {
         Icon icon = viewIcon.create();
         icon.getStyle().set("box-sizing", "border-box")
                 .set("margin-inline-end", "var(--lumo-space-m)")
@@ -53,7 +49,7 @@ public class MainLayout extends AppLayout {
         RouterLink link = new RouterLink();
         link.add(icon, new Span(viewName));
         // Demo has no routes
-        link.setRoute(LoginView.class);
+        link.setRoute(className);
         link.setTabIndex(-1);
 
         return new Tab(link);
