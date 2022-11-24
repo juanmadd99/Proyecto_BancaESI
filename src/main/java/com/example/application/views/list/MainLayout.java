@@ -23,18 +23,13 @@ public class MainLayout extends AppLayout {
         title.getStyle().set("font-size", "var(--lumo-font-size-l)")
                 .set("margin", "0");
 
-        Tabs tabs = getTabs();
-
-        addToDrawer(tabs);
         addToNavbar(toggle, title);
     }
     // end::snippet[]
 
     private Tabs getTabs() {
         Tabs tabs = new Tabs();
-        tabs.add(createTab(VaadinIcon.DASHBOARD, "Login", LoginView.class),
-                createTab(VaadinIcon.CART, "Mi cuenta", PerfilView.class),
-                createTab(VaadinIcon.USER_HEART, "Mis productos", LoginView.class));
+        tabs.add(createTab(VaadinIcon.DASHBOARD, "Login", LoginView.class));
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
         return tabs;
     }
