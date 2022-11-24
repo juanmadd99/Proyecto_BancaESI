@@ -1,41 +1,26 @@
 package com.example.application.views.list;
 
-import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.login.LoginForm;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.BeforeEnterEvent;
-import com.vaadin.flow.router.BeforeEnterObserver;
-import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.router.ParentLayout;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.auth.AnonymousAllowed;
 
-@SuppressWarnings("serial")
-@Route("login") 
-@PageTitle("Login | ESI BANK")
-@AnonymousAllowed
-public class LoginView extends VerticalLayout implements BeforeEnterObserver {
+@Route(value = "login",layout = MainLayout.class)
+public class LoginView extends Div {
 
-	private final LoginForm login = new LoginForm(); 
+    public LoginView() {
+        // Demo purposes only
+        getStyle().set("background-color", "var(--lumo-contrast-5pct)")
+                .set("display", "flex").set("justify-content", "center")
+                .set("padding", "var(--lumo-space-l)");
 
-	public LoginView(){
-		addClassName("login-view");
-		setSizeFull(); 
-		setAlignItems(Alignment.CENTER);
-		setJustifyContentMode(JustifyContentMode.CENTER);
+        // tag::snippet[]
+        LoginForm loginForm = new LoginForm();
+        add(loginForm);
+        // end::snippet[]
+        // Prevent the example from stealing focus when browsing the
+        // documentation
+        loginForm.getElement().setAttribute("no-autofocus", "");
+    }
 
-		login.setAction("login"); 
-
-		add(new H1("ESI BANK"), login);
-	}
-
-	@Override
-	public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-		// inform the user about an authentication error
-		if(beforeEnterEvent.getLocation()  
-        .getQueryParameters()
-        .getParameters()
-        .containsKey("error")) {
-            login.setError(true);
-        }
-	}
 }
