@@ -1,5 +1,10 @@
 package com.example.application.views.list;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
+import java.util.Calendar;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -18,16 +23,15 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 
 @PageTitle("Transfer")
-@Route(value = "transfer"
-		+ "", layout = MainLayout.class)
+@Route(value = "transfer" + "", layout = MainLayout.class)
 @RouteAlias(value = "transfer", layout = MainLayout.class)
 public class TransferView extends Div {
 
     private TextField cuentaOrigen = new TextField("Cuenta de origen");
     private TextField cuentaDestino = new TextField("Cuenta de destino");
-    private Select<Integer> month = new Select<>();
-    private Select<Integer> year = new Select<>();
-    private ExpirationDateField expiration = new ExpirationDateField("Expiration date", month, year);
+    private int month;
+    private int year;
+    private ExpirationDateField expiration = new ExpirationDateField("Fecha de transferencia", month, year);
     private BigDecimalField csc = new BigDecimalField("Cantidad");
 
     private Button cancel = new Button("Cancel");
@@ -41,15 +45,15 @@ public class TransferView extends Div {
         add(createButtonLayout());
 
         cancel.addClickListener(e -> {
-            Notification.show("Not implemented");
+            Notification.show("No ha sido implementado");
         });
         submit.addClickListener(e -> {
-            Notification.show("Not implemented");
+            Notification.show("No ha sido implementado");
         });
     }
 
     private Component createTitle() {
-        return new H3("Credit Card");
+        return new H3("Transferencia entre cuentas");
     }
 
     private Component createFormLayout() {
@@ -61,14 +65,13 @@ public class TransferView extends Div {
     private Component createButtonLayout() {
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.addClassName("button-layout");
+        Calendar c1 = Calendar.getInstance();
         cuentaOrigen.setPattern("[\\d ]*");
         cuentaOrigen.setPreventInvalidInput(true);
         cuentaOrigen.setRequired(true);
         cuentaOrigen.setErrorMessage("Please enter a valid account number");
-        month.setPlaceholder("Month");
-        month.setItems(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
-        year.setPlaceholder("Year");
-        year.setItems(20, 21, 22, 23, 24, 25);
+        month = LocalDate.now().getMonth();
+        year.setPlaceholder("Año");
         submit.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         buttonLayout.add(submit);
         buttonLayout.add(cancel);
@@ -76,7 +79,7 @@ public class TransferView extends Div {
     }
 
     private class ExpirationDateField extends CustomField<String> {
-        public ExpirationDateField(String label, Select<Integer> month, Select<Integer> year) {
+        public ExpirationDateField(String label, Month month, Year year) {
             setLabel(label);
             HorizontalLayout layout = new HorizontalLayout(month, year);
             layout.setFlexGrow(1.0, month, year);

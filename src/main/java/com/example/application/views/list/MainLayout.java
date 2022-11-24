@@ -19,7 +19,7 @@ public class MainLayout extends AppLayout {
     	
         DrawerToggle toggle = new DrawerToggle();
 
-        H1 title = new H1("MyApp");
+        H1 title = new H1("ESI Bank");
         title.getStyle().set("font-size", "var(--lumo-font-size-l)")
                 .set("margin", "0");
 
