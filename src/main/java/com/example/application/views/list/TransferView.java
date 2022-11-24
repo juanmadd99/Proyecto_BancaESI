@@ -18,7 +18,8 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 
 @PageTitle("Transfer")
-@Route(value = "transfer" + "", layout = MainLayout.class)
+@Route(value = "transfer"
+		+ "", layout = MainLayout.class)
 @RouteAlias(value = "transfer", layout = MainLayout.class)
 public class TransferView extends Div {
 
@@ -26,7 +27,7 @@ public class TransferView extends Div {
     private TextField cuentaDestino = new TextField("Cuenta de destino");
     private Select<Integer> month = new Select<>();
     private Select<Integer> year = new Select<>();
-    private ActualDateField expiration = new ActualDateField("Fecha de transferencia", month, year);
+    private ExpirationDateField expiration = new ExpirationDateField("Expiration date", month, year);
     private BigDecimalField csc = new BigDecimalField("Cantidad");
 
     private Button cancel = new Button("Cancel");
@@ -74,8 +75,8 @@ public class TransferView extends Div {
         return buttonLayout;
     }
 
-    private class ActualDateField extends CustomField<String> {
-        public ActualDateField(String label, Select<Integer> month, Select<Integer> year) {
+    private class ExpirationDateField extends CustomField<String> {
+        public ExpirationDateField(String label, Select<Integer> month, Select<Integer> year) {
             setLabel(label);
             HorizontalLayout layout = new HorizontalLayout(month, year);
             layout.setFlexGrow(1.0, month, year);
