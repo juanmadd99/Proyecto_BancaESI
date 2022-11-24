@@ -27,7 +27,7 @@ public class TransferView extends Div {
     private TextField cuentaDestino = new TextField("Cuenta de destino");
     private Select<Integer> month = new Select<>();
     private Select<Integer> year = new Select<>();
-    private ExpirationDateField expiration = new ExpirationDateField("Expiration date", month, year);
+    private ActualDateField expiration = new ExpirationDateField("Fecha de transferencia", month, year);
     private BigDecimalField csc = new BigDecimalField("Cantidad");
 
     private Button cancel = new Button("Cancel");
