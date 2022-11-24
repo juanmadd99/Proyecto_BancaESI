@@ -8,11 +8,11 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 
 
 // tag::snippet[]
+@SuppressWarnings("serial")
 public class MainLayout extends AppLayout {
 
     public MainLayout() {
