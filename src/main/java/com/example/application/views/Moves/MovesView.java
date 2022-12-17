@@ -9,8 +9,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import javax.annotation.security.PermitAll;
 
-@PageTitle("Empty2")
-@Route(value = "empty2", layout = MainLayout.class)
+@PageTitle("Mis movimientos")
+@Route(value = "moves", layout = MainLayout.class)
 @PermitAll
 public class MovesView extends VerticalLayout {
 

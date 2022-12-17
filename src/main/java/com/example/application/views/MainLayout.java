@@ -28,6 +28,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.theme.lumo.LumoUtility;
+
+import java.awt.Menu;
 import java.io.ByteArrayInputStream;
 import java.util.Optional;
 
@@ -74,25 +76,25 @@ public class MainLayout extends AppLayout {
         // AppNav is not yet an official component.
         // For documentation, visit https://github.com/vaadin/vcf-nav#readme
         AppNav nav = new AppNav(); 
-
+        
         if (accessChecker.hasAccess(MyAccountView.class)) {
-            nav.addItem(new AppNavItem("Mi cuenta", MyAccountView.class, "Login"));
+            nav.addItem(new AppNavItem("Mi cuenta", MyAccountView.class)); 
 
         }
         if (accessChecker.hasAccess(MyProductsView.class)) {
-            nav.addItem(new AppNavItem("Mis productos", MyProductsView.class, "la la-file"));
+            nav.addItem(new AppNavItem("Mis productos", MyProductsView.class));
 
         }
         if (accessChecker.hasAccess(MovesView.class)) {
-            nav.addItem(new AppNavItem("Mis movimientos", MovesView.class, "la la-file"));
+            nav.addItem(new AppNavItem("Mis movimientos", MovesView.class));
 
         }
         if (accessChecker.hasAccess(TransferView.class)) {
-            nav.addItem(new AppNavItem("Hacer una transferencia", TransferView.class, "la la-file"));
+            nav.addItem(new AppNavItem("Hacer una transferencia", TransferView.class));
 
         }
         if (accessChecker.hasAccess(ResumeView.class)) {
-            nav.addItem(new AppNavItem("Resumen de mi cuenta", ResumeView.class, "la la-file"));
+            nav.addItem(new AppNavItem("Resumen de mi cuenta", ResumeView.class));
 
         }
 

@@ -12,7 +12,6 @@ import javax.annotation.security.PermitAll;
 
 @PageTitle("Mi cuenta")
 @Route(value = "myaccount", layout = MainLayout.class)
-@RouteAlias(value = "", layout = MainLayout.class)
 @PermitAll
 public class MyAccountView extends VerticalLayout {
 
