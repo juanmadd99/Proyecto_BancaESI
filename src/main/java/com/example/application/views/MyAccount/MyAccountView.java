@@ -10,6 +10,9 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
+
+import java.util.List;
+
 import javax.annotation.security.PermitAll;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -29,6 +32,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.provider.DataProvider;
 import com.example.application.data.entity.User;
 import com.example.application.data.entity.Movimiento;
 
@@ -65,14 +69,17 @@ public class MyAccountView extends VerticalLayout {
         //
         
         Grid<Movimiento> grid = new Grid<>(Movimiento.class, false);
-        grid.addColumn(Movimiento::getFirstName).setHeader("First name");
-        grid.addColumn(Movimiento::getLastName).setHeader("Last name");
-        grid.addColumn(Movimiento::getEmail).setHeader("Email");
-        grid.addColumn(Movimiento::getProfession).setHeader("Profession");
+        grid.addColumn(Movimiento::getdFecha).setHeader("Fecha realizacion");
+        grid.addColumn(Movimiento::getCuentaOrigen).setHeader("Cuenta origen");
+        grid.addColumn(Movimiento::getCuentaDestino).setHeader("Cuenta destino");
+        grid.addColumn(Movimiento::getfValor).setHeader("Cantidad");
+        
+        //DataProvider<Movimiento, String> dataProvider = new DatabaseDataProvider();
+        //DataService<Movimiento> dataService = new DataService();
 
-        List<Person> people = DataService.getPeople();
-        grid.setItems(people);
-
+        List<Movimiento> mov = dataService.getMovimiento();
+        grid.setItems(mov);
+       
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);

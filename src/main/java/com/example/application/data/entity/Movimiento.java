@@ -11,9 +11,9 @@ public class Movimiento {
 	public Integer getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	/*public void setId(Integer id) {
 		this.id = id;
-	}
+	}*/
 	
 	public Date getdFecha() {
 		return dFecha;
@@ -33,6 +33,7 @@ public class Movimiento {
 		return cuentaOrigen;
 	}
 	public void setCuentaOrigen(CuentaBancaria cuentaOrigen) {
+		if(cuentaOrigen == null) throw new IllegalArgumentException("El campo cuentaOrigen no puede estar vacío.");
 		this.cuentaOrigen = cuentaOrigen;
 	}
 	
@@ -40,7 +41,20 @@ public class Movimiento {
 		return cuentaDestino;
 	}
 	public void setCuentaDestino(CuentaBancaria cuentaDestino) {
+		if(cuentaOrigen == null) throw new IllegalArgumentException("El campo cuentaDestino no puede estar vacío.");
 		this.cuentaDestino = cuentaDestino;
+	}
+	
+	//Constructores
+	
+	public Movimiento(Date dFecha, Float fValor, CuentaBancaria cuentaOrigen, CuentaBancaria cuentaDestino){ this(null, dFecha, fValor, cuentaOrigen, cuentaDestino); }
+		
+	private Movimiento(Integer iId, Date dFecha, Float fValor, CuentaBancaria cuentaOrigen, CuentaBancaria cuentaDestino){
+		setdFecha(dFecha);
+		setfValor(fValor);
+		setCuentaOrigen(cuentaOrigen);
+		setCuentaDestino(cuentaDestino);
+		id = iId;
 	}
 	
 	

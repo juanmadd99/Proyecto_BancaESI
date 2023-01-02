@@ -11,13 +11,16 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Table(name = "application_user")
 public class User extends AbstractEntity {
-
+	private Integer id;
     private String username;
     private String name;
+    private String dni;
+    private Date fechaNacimiento;
     @JsonIgnore
     private String hashedPassword;
     @Enumerated(EnumType.STRING)
@@ -26,24 +29,45 @@ public class User extends AbstractEntity {
     @Lob
     @Column(length = 1000000)
     private byte[] profilePicture;
-
+    
+    public Integer getid() {
+    	return id;
+    }
+    
+    public String getDni() {
+		return dni;
+	}
+	public void setDni(String dni) {
+		if(dni == null) throw new IllegalArgumentException("El campo dni no puede estar vacío.");
+		else this.dni = dni;
+	}
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+	
     public String getUsername() {
         return username;
     }
     public void setUsername(String username) {
-        this.username = username;
+    	if(username == null) throw new IllegalArgumentException("El campo username no puede estar vacío.");
+		else this.username = username;
     }
     public String getName() {
         return name;
     }
     public void setName(String name) {
-        this.name = name;
+    	if(name == null) throw new IllegalArgumentException("El campo name no puede estar vacío.");
+		else this.name = name;
     }
     public String getHashedPassword() {
         return hashedPassword;
     }
     public void setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
+    	if(hashedPassword == null) throw new IllegalArgumentException("El campo hashedPassword no puede estar vacío.");
+		else this.hashedPassword = hashedPassword;
     }
     public Set<Role> getRoles() {
         return roles;
@@ -56,5 +80,16 @@ public class User extends AbstractEntity {
     }
     public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
+    }
+    
+    private User(Integer id, String username, String name, String dni, Date fechaNac, String hashedPass, Set<Role> rol, byte[] profilePicture) {
+    	setUsername(username);
+    	setName(name);
+    	setDni(dni);
+    	setFechaNacimiento(fechaNac);
+    	setHashedPassword(hashedPass);
+    	setRoles(rol);
+    	setProfilePicture(profilePicture);
+    	this.id=id;
     }
 }

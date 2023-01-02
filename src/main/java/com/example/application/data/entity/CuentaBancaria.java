@@ -13,22 +13,24 @@ public class CuentaBancaria {
 	public Integer getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	/*public void setId(Integer id) {
 		this.id = id;
-	}
+	}*/
 	
 	public String getIban() {
 		return iban;
 	}
 	public void setIban(String iban) {
-		this.iban = iban;
+		if(iban == null) throw new IllegalArgumentException("El campo iban no puede estar vacío.");
+		else this.iban = iban;
 	}
 	
 	public User getTitular() {
 		return titular;
 	}
 	public void setTitular(User titular) {
-		this.titular = titular;
+		if(titular == null) throw new IllegalArgumentException("El campo titular no puede estar vacío.");
+		else this.titular = titular;
 	}
 	
 	public Float getSaldo() {
@@ -44,5 +46,17 @@ public class CuentaBancaria {
 	public void setdFechaCreacion(Date dFechaCreacion) {
 		this.dFechaCreacion = dFechaCreacion;
 	}
+	
+	//Constructores
+	
+		public CuentaBancaria(String sIban, User titular, Float fSaldo, Date dFechaCreacion){ this(null, sIban, titular, fSaldo, dFechaCreacion); }
+			
+		private CuentaBancaria(Integer iId, String sIban, User titular, Float fSaldo, Date dFechaCreacion){
+			setIban(sIban);
+			setTitular(titular);
+			setSaldo(fSaldo);
+			setdFechaCreacion(dFechaCreacion);
+			id = iId;
+		}
     
 }

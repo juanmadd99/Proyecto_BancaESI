@@ -3,7 +3,7 @@ import java.util.Date;
 
 public class Tarjeta {
 	private Integer id;
-	private Integer numero;
+	private String numero;
 	private String emisor; //Visa, MasterCard y American Express.
 	private CuentaBancaria cuenta;
 	private Date fechaCaducidad;
@@ -15,26 +15,29 @@ public class Tarjeta {
 	public Integer getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	/*public void setId(Integer id) {
 		this.id = id;
-	}
-	public Integer getNumero() {
+	}*/
+	public String getNumero() {
 		return numero;
 	}
-	public void setNumero(Integer numero) {
+	public void setNumero(String numero) {
+		if(numero == null) throw new IllegalArgumentException("El campo numero no puede estar vacío.");
 		this.numero = numero;
 	}
 	public String getEmisor() {
 		return emisor;
 	}
 	public void setEmisor(String emisor) {
-		this.emisor = emisor;
+		if(emisor == "MasterCard" || emisor == "American Express" || emisor == "Visa") this.emisor = emisor;
+		else throw new IllegalArgumentException("Error, emisor de tarjeta es incorrecto");
 	}
 	public CuentaBancaria getCuenta() {
 		return cuenta;
 	}
 	public void setCuenta(CuentaBancaria cuenta) {
-		this.cuenta = cuenta;
+		if(cuenta == null) throw new IllegalArgumentException("El campo cuenta no puede estar vacío.");
+		else this.cuenta = cuenta;
 	}
 	public Date getFechaCaducidad() {
 		return fechaCaducidad;
@@ -46,12 +49,14 @@ public class Tarjeta {
 		return pin;
 	}
 	public void setPin(Integer pin) {
-		this.pin = pin;
+		if(pin < 0 || pin > 9999) throw new IllegalArgumentException("El campo pin es incorrecto.");
+		else this.pin = pin;
 	}
 	public Integer getCvv() {
 		return cvv;
 	}
 	public void setCvv(Integer cvv) {
+		if(cvv < 0 || cvv > 999) throw new IllegalArgumentException("El campo cvv es incorrecto.");
 		this.cvv = cvv;
 	}
 	public Float getLimiteMax() {
@@ -65,6 +70,20 @@ public class Tarjeta {
 	}
 	public void setLimiteMin(Float limiteMin) {
 		this.limiteMin = limiteMin;
+	}
+	
+	public Tarjeta(String iNumero, String sEmisor, CuentaBancaria cuenta, Date dFechaCaducidad, Integer iPin, Integer iCvv, Float fLimiteMin, Float fLimiteMax){ this(null, iNumero, sEmisor, cuenta, dFechaCaducidad, iPin, iCvv, fLimiteMin, fLimiteMax); }
+	
+	private Tarjeta(Integer iId, String iNumero, String sEmisor, CuentaBancaria cuenta, Date dFechaCaducidad, Integer iPin, Integer iCvv, Float fLimiteMin, Float fLimiteMax){
+		setNumero(iNumero);
+		setEmisor(sEmisor);
+		setCuenta(cuenta);
+		setFechaCaducidad(dFechaCaducidad);
+		setPin(iPin);
+		setCvv(iCvv);
+		setLimiteMax(fLimiteMax);
+		setLimiteMin(fLimiteMin);
+		id = iId;
 	}
 	
 }
