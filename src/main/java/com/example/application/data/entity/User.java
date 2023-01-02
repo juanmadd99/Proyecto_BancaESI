@@ -57,5 +57,4 @@ public class User extends AbstractEntity {
     public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
     }
-
 }

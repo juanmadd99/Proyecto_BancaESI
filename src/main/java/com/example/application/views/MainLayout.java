@@ -8,6 +8,7 @@ import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.Moves.MovesView;
 import com.example.application.views.MyAccount.MyAccountView;
 import com.example.application.views.MyProducts.MyProductsView;
+import com.example.application.views.MyProfile.MyProfileView;
 import com.example.application.views.Resume.ResumeView;
 import com.example.application.views.Transfer.TransferView;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -77,27 +78,18 @@ public class MainLayout extends AppLayout {
         // For documentation, visit https://github.com/vaadin/vcf-nav#readme
         AppNav nav = new AppNav(); 
         
+        if (accessChecker.hasAccess(MyProfileView.class)) {
+            nav.addItem(new AppNavItem("Mi perfil", MyProfileView.class)); 
+
+        }
         if (accessChecker.hasAccess(MyAccountView.class)) {
-            nav.addItem(new AppNavItem("Mi cuenta", MyAccountView.class)); 
-
-        }
-        if (accessChecker.hasAccess(MyProductsView.class)) {
-            nav.addItem(new AppNavItem("Mis productos", MyProductsView.class));
-
-        }
-        if (accessChecker.hasAccess(MovesView.class)) {
-            nav.addItem(new AppNavItem("Mis movimientos", MovesView.class));
+            nav.addItem(new AppNavItem("Mis cuentas", MyAccountView.class)); 
 
         }
         if (accessChecker.hasAccess(TransferView.class)) {
             nav.addItem(new AppNavItem("Hacer una transferencia", TransferView.class));
 
-        }
-        if (accessChecker.hasAccess(ResumeView.class)) {
-            nav.addItem(new AppNavItem("Resumen de mi cuenta", ResumeView.class));
-
-        }
-
+        } 
         return nav; 
     }
 
