@@ -74,11 +74,11 @@ public class MyAccountView extends VerticalLayout {
         grid.addColumn(Movimiento::getCuentaDestino).setHeader("Cuenta destino");
         grid.addColumn(Movimiento::getfValor).setHeader("Cantidad");
         
-        //DataProvider<Movimiento, String> dataProvider = new DatabaseDataProvider();
-        //DataService<Movimiento> dataService = new DataService();
+        /*DataProvider<Movimiento, String> dataProvider = new DatabaseDataProvider();
+        DataService<Movimiento> dataService = new DataService();
 
         List<Movimiento> mov = dataService.getMovimiento();
-        grid.setItems(mov);
+        grid.setItems(mov);*/
        
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);

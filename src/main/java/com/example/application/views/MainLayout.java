@@ -99,10 +99,11 @@ public class MainLayout extends AppLayout {
         Optional<User> maybeUser = authenticatedUser.get();
         if (maybeUser.isPresent()) {
             User user = maybeUser.get();
-
             Avatar avatar = new Avatar(user.getName());
+            String inputString = user.getProfilePicture();
+            byte[] bytePicture = inputString.getBytes();
             StreamResource resource = new StreamResource("profile-pic",
-                    () -> new ByteArrayInputStream(user.getProfilePicture()));
+                    () -> new ByteArrayInputStream(bytePicture));
             avatar.setImageResource(resource);
             avatar.setThemeName("xsmall");
             avatar.getElement().setAttribute("tabindex", "-1");

@@ -2,6 +2,8 @@ package com.example.application.security;
 
 import com.example.application.data.entity.User;
 import com.example.application.data.service.UserRepository;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+	
+	
 
     private final UserRepository userRepository;
 
@@ -34,8 +38,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     private static List<GrantedAuthority> getAuthorities(User user) {
-        return user.getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-                .collect(Collectors.toList());
+        /*return user.getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                .collect(Collectors.toList());*/
+    	List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+        list.add(new SimpleGrantedAuthority("ROLE_" + user.getRoles()));
+        
+        return list;
 
     }
 

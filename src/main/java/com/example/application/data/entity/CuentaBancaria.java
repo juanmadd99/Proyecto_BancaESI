@@ -1,15 +1,28 @@
 package com.example.application.data.entity;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 public class CuentaBancaria {
-
+	@Id
+	@Column
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	
 	private String iban;
+	
     private User titular; //Como se relaciona con el usuario
     private Float saldo;
     private Date dFechaCreacion;
-	
     
+    @OneToMany(mappedBy = "cuentabancaria")
+	private List<Movimiento> Movimientos;
+   
 	public Integer getId() {
 		return id;
 	}
