@@ -2,19 +2,18 @@ package com.example.application.data.entity;
 
 import com.example.application.data.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.Set;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "User")
@@ -23,17 +22,38 @@ public class User extends AbstractEntity {
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	
+	@Column(nullable = false, length = 32)
     private String username;
+	
+	@Column(nullable = false, length = 32)
     private String name;
+	
+	@Column(nullable = false, length = 9)
     private String dni;
+	
+	@Column(nullable = false)
     private Date fechaNacimiento;
+	
     @JsonIgnore
     private String hashedPassword;
+    
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role roles;
+    
+    @OneToMany(mappedBy = "User")
+   	private List<CuentaBancaria> Cuentas;
+    
     @Lob
     @Column(length = 1000000)
     private String profilePicture;
+    
+    @OneToMany(mappedBy = "User")
+   	private List<Consulta> Consultas;
+    
+    @OneToMany(mappedBy = "User")
+   	private List<Respuesta> Respuestas;
     
     public Integer getid() {
     	return id;

@@ -1,13 +1,49 @@
 package com.example.application.data.entity;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Consulta")
 public class Consulta {
+	@Id
+	@Column
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	
+	@Column(name = "FechaRealizacion", nullable = false)
 	private Date dFechaRealizacion;
+	
+	@Column(name = "contenido", nullable = false, length = 255)
 	private String sContenido;
+	
+	@ManyToOne
+	@JoinColumn(name = "gestor_id")
 	private User gestor;	//Gestor al que se le envia la consulta
 	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User cliente;
+	
+	@OneToMany(mappedBy = "Consulta")
+	 private List<Respuesta> Respuestas;
+	
+	public User getCliente() {
+		return cliente;
+	}
+	public void setCliente(User cliente) {
+		this.cliente = cliente;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -35,13 +71,14 @@ public class Consulta {
 		else this.gestor = gestor;
 	}
 	
-	public Consulta(Date dFechaRealizacion, String sContenido, User gestor){ this(null, dFechaRealizacion, sContenido, gestor); }
+	/*public Consulta(Date dFechaRealizacion, String sContenido, User gestor, User cliente){ this(null, dFechaRealizacion, sContenido, gestor, cliente); }
 	
-	private Consulta(Integer iId, Date dFechaRealizacion, String sContenido, User gestor) {
+	private Consulta(Integer iId, Date dFechaRealizacion, String sContenido, User gestor, User cliente) {
 		setdFechaRealizacion(dFechaRealizacion);
 		setsContenido(sContenido);
 		setGestor(gestor);
+		setCliente(cliente);
 		id = iId;
-	}
+	}*/
 
 }

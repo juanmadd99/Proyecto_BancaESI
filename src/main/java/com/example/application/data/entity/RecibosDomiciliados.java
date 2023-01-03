@@ -1,11 +1,34 @@
 package com.example.application.data.entity;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "RecibosDomiciliados")
 public class RecibosDomiciliados {
+	@Id
+	@Column
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	
+	@Column(name="Concepto", nullable = false, length = 32)
 	private String sConcepto;
+	
+	@Column(name="FechaDomiciliacion", nullable = false)
 	private Date dFechaDomiciliacion;
+	
+	@Column(name="Cantidad", nullable = false)
 	private Float fCantidad;
+	
+	@ManyToOne
+	@JoinColumn(name = "cuenta_id")
 	private CuentaBancaria sCuenta;
 	
 	public Integer getId() {

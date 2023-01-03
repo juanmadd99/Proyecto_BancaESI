@@ -1,18 +1,16 @@
 package com.example.application.data.entity;
 import java.util.Date;
-import com.example.application.data.entity.CuentaBancaria;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Movimientos")
+@Table(name = "Movimiento")
 public class Movimiento {
 	@Id
 	@Column
@@ -26,9 +24,11 @@ public class Movimiento {
 	private Float fValor;
 	
 	@ManyToOne
+	@JoinColumn(name = "cuenta_id")
 	private CuentaBancaria cuentaOrigen;
 	
 	@ManyToOne
+	@JoinColumn(name = "cuenta_id")
 	private CuentaBancaria cuentaDestino; //Si recibes dinero, tu cuenta es la destino.
 	
 	public Integer getId() {

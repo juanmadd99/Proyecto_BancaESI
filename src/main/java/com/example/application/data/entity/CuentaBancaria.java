@@ -3,25 +3,43 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "CuentaBancaria")
 public class CuentaBancaria {
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
+	@Column(nullable = false, length = 24)
 	private String iban;
 	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
     private User titular; //Como se relaciona con el usuario
+    
     private Float saldo;
+    
+    @Column (name = "fecha_Creacion", nullable = false)
     private Date dFechaCreacion;
     
-    @OneToMany(mappedBy = "cuentabancaria")
+    @OneToMany(mappedBy = "CuentaBancaria")
 	private List<Movimiento> Movimientos;
+    
+    @OneToMany(mappedBy = "CuentaBancaria")
+   	private List<Tarjeta> Tarjetas;
+    
+    @OneToMany(mappedBy = "CuentaBancaria")
+   	private List<RecibosDomiciliados> Recibos;
    
 	public Integer getId() {
 		return id;

@@ -2,11 +2,35 @@ package com.example.application.data.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Respuesta")
 public class Respuesta {
+	@Id
+	@Column
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	
+	@Column(name="FechaRealizacion", nullable = false)
 	private Date dFechaRealizacion;
+	
+	@Column(name="Contenido", nullable = false, length = 255)
 	private String sContenido;
+	
+	@ManyToOne
+	@JoinColumn(name = "Consulta_id")
 	private Consulta consulta;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
 	private User gestor;	//Gestor al que se le envia la consulta
 	
 	public Integer getId() {
