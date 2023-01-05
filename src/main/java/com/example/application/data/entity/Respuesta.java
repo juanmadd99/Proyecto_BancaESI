@@ -12,27 +12,37 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Respuesta")
+@Table(name = "respuesta")
 public class Respuesta {
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(name="FechaRealizacion", nullable = false)
+	@Column(name="fecha", nullable = false)
 	private Date dFechaRealizacion;
 	
-	@Column(name="Contenido", nullable = false, length = 255)
+	@Column(name="contenido", nullable = false, length = 255)
 	private String sContenido;
 	
 	@ManyToOne
-	@JoinColumn(name = "Consulta_id")
+	@JoinColumn(name = "consulta_id")
 	private Consulta consulta;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "gestor_id")
 	private User gestor;	//Gestor al que se le envia la consulta
 	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;	//Gestor al que se le envia la consulta
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -67,13 +77,14 @@ public class Respuesta {
 		else this.gestor = gestor;
 	}
 	
-	public Respuesta(Date dFechaRealizacion, String sContenido, Consulta consulta, User gestor){ this(null, dFechaRealizacion, sContenido, consulta, gestor); }
+	public Respuesta(Date dFechaRealizacion, String sContenido, Consulta consulta, User gestor, User user){ this(null, dFechaRealizacion, sContenido, consulta, gestor, user); }
 	
-	private Respuesta(Integer iId, Date dFechaRealizacion, String sContenido, Consulta consulta, User gestor) {
+	private Respuesta(Integer iId, Date dFechaRealizacion, String sContenido, Consulta consulta, User gestor, User user) {
 		setdFechaRealizacion(dFechaRealizacion);
 		setsContenido(sContenido);
 		setConsulta(consulta);
 		setGestor(gestor);
+		setUser(user);
 		id = iId;
 	}
 	

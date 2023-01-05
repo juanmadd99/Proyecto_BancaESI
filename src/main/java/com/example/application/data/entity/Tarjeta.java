@@ -74,7 +74,7 @@ public class Tarjeta {
 		return fecha_caducidad;
 	}
 	public void setFechaCaducidad(Date fechaCaducidad) {
-		this.fecha_caducidad = fecha_caducidad;
+		this.fecha_caducidad = fechaCaducidad;
 	}
 	public Integer getPin() {
 		return pin;

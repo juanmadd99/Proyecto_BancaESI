@@ -10,25 +10,25 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Movimiento")
+@Table(name = "movimiento")
 public class Movimiento {
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(nullable = false)
+	@Column(name = "fecha" ,nullable = false)
 	private Date dFecha;
 	
-	@Column
+	@Column(name = "valor")
 	private Float fValor;
 	
 	@ManyToOne
-	@JoinColumn(name = "cuenta_id")
+	@JoinColumn(name = "cuenta_origen")
 	private CuentaBancaria cuentaOrigen;
 	
 	@ManyToOne
-	@JoinColumn(name = "cuenta_id")
+	@JoinColumn(name = "cuenta_destino")
 	private CuentaBancaria cuentaDestino; //Si recibes dinero, tu cuenta es la destino.
 	
 	public Integer getId() {

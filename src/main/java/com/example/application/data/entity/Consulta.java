@@ -14,14 +14,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Consulta")
+@Table(name = "consulta")
 public class Consulta {
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(name = "FechaRealizacion", nullable = false)
+	@Column(name = "fecha", nullable = false)
 	private Date dFechaRealizacion;
 	
 	@Column(name = "contenido", nullable = false, length = 255)
@@ -35,7 +35,7 @@ public class Consulta {
 	@JoinColumn(name = "user_id")
 	private User cliente;
 	
-	@OneToMany(mappedBy = "Consulta")
+	@OneToMany(mappedBy = "consulta")
 	 private List<Respuesta> Respuestas;
 	
 	public User getCliente() {
@@ -71,7 +71,7 @@ public class Consulta {
 		else this.gestor = gestor;
 	}
 	
-	/*public Consulta(Date dFechaRealizacion, String sContenido, User gestor, User cliente){ this(null, dFechaRealizacion, sContenido, gestor, cliente); }
+	public Consulta(Date dFechaRealizacion, String sContenido, User gestor, User cliente){ this(null, dFechaRealizacion, sContenido, gestor, cliente); }
 	
 	private Consulta(Integer iId, Date dFechaRealizacion, String sContenido, User gestor, User cliente) {
 		setdFechaRealizacion(dFechaRealizacion);
@@ -79,6 +79,6 @@ public class Consulta {
 		setGestor(gestor);
 		setCliente(cliente);
 		id = iId;
-	}*/
+	}
 
 }

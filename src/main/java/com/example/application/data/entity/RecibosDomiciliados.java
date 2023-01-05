@@ -11,20 +11,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "RecibosDomiciliados")
+@Table(name = "recibo_domiciliado")
 public class RecibosDomiciliados {
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(name="Concepto", nullable = false, length = 32)
+	@Column(name="concepto", nullable = false, length = 32)
 	private String sConcepto;
 	
-	@Column(name="FechaDomiciliacion", nullable = false)
+	@Column(name="fecha", nullable = false)
 	private Date dFechaDomiciliacion;
 	
-	@Column(name="Cantidad", nullable = false)
+	@Column(name="valor", nullable = false)
 	private Float fCantidad;
 	
 	@ManyToOne

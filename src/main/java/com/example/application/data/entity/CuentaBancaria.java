@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "CuentaBancaria")
+@Table(name = "cuenta_bancaria")
 public class CuentaBancaria {
 	@Id
 	@Column
@@ -27,9 +27,10 @@ public class CuentaBancaria {
 	@JoinColumn(name = "user_id")
     private User titular; //Como se relaciona con el usuario
     
+	@Column(name = "saldo")
     private Float saldo;
     
-    @Column (name = "fecha_Creacion", nullable = false)
+    @Column (name = "fecha_creacion", nullable = false)
     private Date dFechaCreacion;
     
     @OneToMany(mappedBy = "CuentaBancaria")

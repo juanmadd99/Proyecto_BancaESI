@@ -23,7 +23,7 @@ import com.example.application.data.entity.User;
 @SpringBootApplication
 public class SpringDataJPAaplication {
 	public static void main(String[] args) {
-		//SpringApplication.run(SpringDataJPAaplication.class, args);
+		/*//SpringApplication.run(SpringDataJPAaplication.class, args);
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("Crear BD");
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -38,10 +38,9 @@ public class SpringDataJPAaplication {
 			tx.rollback();
 		}
 		em.close();
-		emf.close();
-		
+		emf.close();*/
 	}
-	
+		
 	@Bean
 	public CommandLineRunner run(UserRepository repository) {
 		return (args -> {
@@ -54,5 +53,6 @@ public class SpringDataJPAaplication {
 		com.example.application.data.entity.User usuario = new User("Diaz", "Juanma", "juanmadiaz@gmail.com","1111111A",new Date(112,7,1,10,30,15), "asdfghjk", Role.USER, "https://i.stack.imgur.com/l60Hf.png");
 		repository.save(usuario);
 	}
-	
+
+
 }
