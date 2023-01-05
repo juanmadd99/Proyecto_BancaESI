@@ -54,7 +54,10 @@ public class User extends AbstractEntity {
     
     @OneToMany(mappedBy = "User")
    	private List<Respuesta> Respuestas;
-    
+
+    public User() {
+    }
+
     public Integer getid() {
     	return id;
     }
