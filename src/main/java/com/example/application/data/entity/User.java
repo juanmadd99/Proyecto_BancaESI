@@ -14,20 +14,31 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Date;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 public class User extends AbstractEntity {
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(nullable = false, length = 32)
-    private String username;
+	@Column(nullable = false, length = 100)
+    private String lastName;
 	
-	@Column(nullable = false, length = 32)
+	@Column(nullable = false, length = 100)
     private String name;
+	
+	@Column(nullable = false, length = 128)
+    private String email;
 	
 	@Column(nullable = false, length = 9)
     private String dni;
@@ -36,23 +47,24 @@ public class User extends AbstractEntity {
     private Date fechaNacimiento;
 	
     @JsonIgnore
-    private String hashedPassword;
+    @Column(nullable = false, length = 128)
+    private String password;
     
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role roles;
     
-    @OneToMany(mappedBy = "User")
+    @OneToMany(mappedBy = "user")
    	private List<CuentaBancaria> Cuentas;
     
     @Lob
-    @Column(length = 1000000)
+    @Column(length = 128)
     private String profilePicture;
     
-    @OneToMany(mappedBy = "User")
+    @OneToMany(mappedBy = "user")
    	private List<Consulta> Consultas;
     
-    @OneToMany(mappedBy = "User")
+    @OneToMany(mappedBy = "user")
    	private List<Respuesta> Respuestas;
 
     public User() {
@@ -65,6 +77,15 @@ public class User extends AbstractEntity {
     public String getDni() {
 		return dni;
 	}
+    
+    public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 	public void setDni(String dni) {
 		if(dni == null) throw new IllegalArgumentException("El campo dni no puede estar vacío.");
 		else this.dni = dni;
@@ -76,12 +97,12 @@ public class User extends AbstractEntity {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	
-    public String getUsername() {
-        return username;
+    public String getLastName() {
+        return lastName;
     }
-    public void setUsername(String username) {
-    	if(username == null) throw new IllegalArgumentException("El campo username no puede estar vacío.");
-		else this.username = username;
+    public void setLastName(String lastName) {
+    	if(lastName == null) throw new IllegalArgumentException("El campo username no puede estar vacío.");
+		else this.lastName = lastName;
     }
     public String getName() {
         return name;
@@ -91,11 +112,11 @@ public class User extends AbstractEntity {
 		else this.name = name;
     }
     public String getHashedPassword() {
-        return hashedPassword;
+        return password;
     }
-    public void setHashedPassword(String hashedPassword) {
-    	if(hashedPassword == null) throw new IllegalArgumentException("El campo hashedPassword no puede estar vacío.");
-		else this.hashedPassword = hashedPassword;
+    public void setHashedPassword(String password) {
+    	if(password == null) throw new IllegalArgumentException("El campo hashedPassword no puede estar vacío.");
+		else this.password = password;
     }
     public Role getRoles() {
         return roles;
@@ -110,9 +131,10 @@ public class User extends AbstractEntity {
         this.profilePicture = profilePicture;
     }
         
-    private User(Integer id, String username, String name, String dni, Date fechaNac, String hashedPass, Role rol, String profilePicture) {
-    	setUsername(username);
+    private User(Integer id, String username, String name, String email, String dni, Date fechaNac, String hashedPass, Role rol, String profilePicture) {
+    	setLastName(username);
     	setName(name);
+    	setEmail(email);
     	setDni(dni);
     	setFechaNacimiento(fechaNac);
     	setHashedPassword(hashedPass);
@@ -121,6 +143,6 @@ public class User extends AbstractEntity {
     	this.id=id;
     }
     
-    public User(String username, String name, String dni, Date fechaNac, String hashedPass, Role user, String profilePicture) {this(null, username, name, dni, fechaNac, hashedPass, user, profilePicture);}
+    public User(String username, String name, String email, String dni, Date fechaNac, String hashedPass, Role user, String profilePicture) {this(null, username, name, email, dni, fechaNac, hashedPass, user, profilePicture);}
 
 }

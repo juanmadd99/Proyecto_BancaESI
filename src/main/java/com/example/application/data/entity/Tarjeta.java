@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Tarjeta")
+@Table(name = "tarjeta")
 public class Tarjeta {
 	@Id
 	@Column
@@ -29,7 +29,7 @@ public class Tarjeta {
 	private CuentaBancaria cuenta;
 	
 	@Column(nullable = false)
-	private Date fechaCaducidad;
+	private Date fecha_caducidad;
 	
 	@Column(nullable = false)
 	private Integer pin;
@@ -38,10 +38,10 @@ public class Tarjeta {
 	private Integer cvv;
 	
 	@Column
-	private Float limiteMax;
+	private Float limite_maximo;
 	
 	@Column
-	private Float limiteMin;
+	private Float limite_minimo;
 	
 	public Integer getId() {
 		return id;
@@ -71,10 +71,10 @@ public class Tarjeta {
 		else this.cuenta = cuenta;
 	}
 	public Date getFechaCaducidad() {
-		return fechaCaducidad;
+		return fecha_caducidad;
 	}
 	public void setFechaCaducidad(Date fechaCaducidad) {
-		this.fechaCaducidad = fechaCaducidad;
+		this.fecha_caducidad = fecha_caducidad;
 	}
 	public Integer getPin() {
 		return pin;
@@ -91,16 +91,16 @@ public class Tarjeta {
 		this.cvv = cvv;
 	}
 	public Float getLimiteMax() {
-		return limiteMax;
+		return limite_maximo;
 	}
 	public void setLimiteMax(Float limiteMax) {
-		this.limiteMax = limiteMax;
+		this.limite_maximo = limiteMax;
 	}
 	public Float getLimiteMin() {
-		return limiteMin;
+		return limite_minimo;
 	}
 	public void setLimiteMin(Float limiteMin) {
-		this.limiteMin = limiteMin;
+		this.limite_minimo = limiteMin;
 	}
 	
 	public Tarjeta(String iNumero, String sEmisor, CuentaBancaria cuenta, Date dFechaCaducidad, Integer iPin, Integer iCvv, Float fLimiteMin, Float fLimiteMax){ this(null, iNumero, sEmisor, cuenta, dFechaCaducidad, iPin, iCvv, fLimiteMin, fLimiteMax); }

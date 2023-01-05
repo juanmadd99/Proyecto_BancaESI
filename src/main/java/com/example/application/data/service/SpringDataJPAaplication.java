@@ -51,7 +51,7 @@ public class SpringDataJPAaplication {
 	}
 	
 	private void insertUser(UserRepository repository) {
-		com.example.application.data.entity.User usuario = new User("Diaz", "Juanma", "1111111A",new Date(112,7,1,10,30,15), "asdfghjk", Role.USER, "https://i.stack.imgur.com/l60Hf.png");
+		com.example.application.data.entity.User usuario = new User("Diaz", "Juanma", "juanmadiaz@gmail.com","1111111A",new Date(112,7,1,10,30,15), "asdfghjk", Role.USER, "https://i.stack.imgur.com/l60Hf.png");
 		repository.save(usuario);
 	}
 	
