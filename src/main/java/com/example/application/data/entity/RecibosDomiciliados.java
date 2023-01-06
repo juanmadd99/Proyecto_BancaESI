@@ -29,7 +29,7 @@ public class RecibosDomiciliados {
 	
 	@ManyToOne
 	@JoinColumn(name = "cuenta_id")
-	private CuentaBancaria sCuenta;
+	private CuentaBancaria cuenta;
 	
 	public Integer getId() {
 		return id;
@@ -57,11 +57,11 @@ public class RecibosDomiciliados {
 		this.fCantidad = fCantidad;
 	}
 	public CuentaBancaria getsCuenta() {
-		return sCuenta;
+		return cuenta;
 	}
 	public void setsCuenta(CuentaBancaria sCuenta) {
 		if(sCuenta == null) throw new IllegalArgumentException("El campo cuenta no puede estar vacío.");
-		else this.sCuenta = sCuenta;
+		else this.cuenta = sCuenta;
 	}
 	
 	public RecibosDomiciliados(Date dFechaDomiciliacion, String sConcepto, Float fCantidad, CuentaBancaria cuenta){ this(null, dFechaDomiciliacion, sConcepto, fCantidad, cuenta); }

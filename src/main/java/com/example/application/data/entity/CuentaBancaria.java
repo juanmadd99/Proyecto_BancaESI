@@ -33,13 +33,16 @@ public class CuentaBancaria {
     @Column (name = "fecha_creacion", nullable = false)
     private Date dFechaCreacion;
     
-    @OneToMany(mappedBy = "CuentaBancaria")
+    @OneToMany(mappedBy = "cuentaOrigen")
 	private List<Movimiento> Movimientos;
     
-    @OneToMany(mappedBy = "CuentaBancaria")
+    @OneToMany(mappedBy = "cuentaDestino")
+	private List<Movimiento> Movimientos_d;
+    
+    @OneToMany(mappedBy = "cuenta")
    	private List<Tarjeta> Tarjetas;
     
-    @OneToMany(mappedBy = "CuentaBancaria")
+    @OneToMany(mappedBy = "cuenta")
    	private List<RecibosDomiciliados> Recibos;
    
 	public Integer getId() {

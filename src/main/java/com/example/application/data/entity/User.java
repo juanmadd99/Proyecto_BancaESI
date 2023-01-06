@@ -54,18 +54,24 @@ public class User extends AbstractEntity {
     @Column(nullable = false)
     private Role roles;
     
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "titular")
    	private List<CuentaBancaria> Cuentas;
     
     @Lob
     @Column(length = 128)
     private String profilePicture;
     
-    @OneToMany(mappedBy = "user")
-   	private List<Consulta> Consultas;
+    @OneToMany(mappedBy = "cliente")
+   	private List<Consulta> Consultas_cl;
+    
+    @OneToMany(mappedBy = "gestor")
+   	private List<Consulta> Consultas_g;
     
     @OneToMany(mappedBy = "user")
-   	private List<Respuesta> Respuestas;
+   	private List<Respuesta> Respuestas_c;
+    
+    @OneToMany(mappedBy = "gestor")
+   	private List<Respuesta> Respuestas_g;
 
     public User() {
     }
@@ -101,7 +107,7 @@ public class User extends AbstractEntity {
         return lastName;
     }
     public void setLastName(String lastName) {
-    	if(lastName == null) throw new IllegalArgumentException("El campo username no puede estar vacío.");
+    	if(lastName == null) throw new IllegalArgumentException("El campo lastName no puede estar vacío.");
 		else this.lastName = lastName;
     }
     public String getName() {
