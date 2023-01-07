@@ -1,9 +1,13 @@
 package com.example.application.data.entity;
 
 import com.example.application.data.Role;
+import com.example.application.data.service.UserRepository;
+import com.example.application.data.service.UserService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -11,7 +15,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import java.util.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -29,7 +38,7 @@ public class User extends AbstractEntity {
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private int id;
 	
 	@Column(nullable = false, length = 100)
     private String lastName;
@@ -72,13 +81,18 @@ public class User extends AbstractEntity {
     
     @OneToMany(mappedBy = "gestor")
    	private List<Respuesta> Respuestas_g;
-
+    
     public User() {
     }
 
-    public Integer getid() {
+    public int getid() {
     	return id;
     }
+    
+    public void setId() {
+    	UserRepository repository = null;
+    	this.id = repository.findLastId();
+	}
     
     public String getDni() {
 		return dni;
@@ -137,7 +151,8 @@ public class User extends AbstractEntity {
         this.profilePicture = profilePicture;
     }
         
-    private User(Integer id, String username, String name, String email, String dni, Date fechaNac, String hashedPass, Role rol, String profilePicture) {
+    public User(String username, String name, String email, String dni, Date fechaNac, String hashedPass, Role rol, String profilePicture) {
+    	setId();
     	setLastName(username);
     	setName(name);
     	setEmail(email);
@@ -146,9 +161,8 @@ public class User extends AbstractEntity {
     	setHashedPassword(hashedPass);
     	setRoles(rol);
     	setProfilePicture(profilePicture);
-    	this.id=id;
     }
     
-    public User(String username, String name, String email, String dni, Date fechaNac, String hashedPass, Role user, String profilePicture) {this(null, username, name, email, dni, fechaNac, hashedPass, user, profilePicture);}
+    //public User(String username, String name, String email, String dni, Date fechaNac, String hashedPass, Role user, String profilePicture) {this(, username, name, email, dni, fechaNac, hashedPass, user, profilePicture);}
 
 }

@@ -2,12 +2,22 @@ package com.example.application.data.service;
 import com.example.application.data.entity.User;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.function.Function;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import lombok.RequiredArgsConstructor;
 import org.vaadin.crudui.crud.CrudListener;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,9 +28,10 @@ public class UserService implements CrudListener<User> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final UserRepository repository = null;
+	private UserRepository repository;
 
-
+	//Métodos de CrudListener<User>
+	
     public Optional<User> get(Integer id) {
         return repository.findById(id);
     }
@@ -30,7 +41,7 @@ public class UserService implements CrudListener<User> {
         return repository.save(entity);
     }
 
-    public void delete(Integer id) {
+    public void delete(int id) {
         repository.deleteById(id);
     }
     
@@ -56,5 +67,8 @@ public class UserService implements CrudListener<User> {
 	public void delete(User domainObjectToDelete) {
 		repository.delete(domainObjectToDelete);
 	}
-
+	
+	public int lastId() {
+		return repository.findLastId();
+	}
 }
