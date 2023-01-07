@@ -1,127 +1,89 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 04-01-2023 a las 11:46:15
--- Versión del servidor: 10.4.24-MariaDB
--- Versión de PHP: 8.1.4
+-- Servidor: localhost
+-- Tiempo de generación: 07-01-2023 a las 19:36:11
+-- Versión del servidor: 8.0.17
+-- Versión de PHP: 7.3.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `esi_bank`
 --
-CREATE DATABASE IF NOT EXISTS `esi_bank` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `esi_bank`;
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `consulta`
 --
--- Creación: 04-01-2023 a las 10:33:33
---
 
-DROP TABLE IF EXISTS `consulta`;
 CREATE TABLE `consulta` (
   `id` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `contenido` text NOT NULL,
   `gestor_id` int(11) NOT NULL COMMENT 'identificador del gestor',
   `user_id` int(11) NOT NULL COMMENT 'identificador del usuario del sistema'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- RELACIONES PARA LA TABLA `consulta`:
---   `gestor_id`
---       `user` -> `id`
---   `user_id`
---       `user` -> `id`
---
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `cuenta_bancaria`
 --
--- Creación: 04-01-2023 a las 10:15:59
---
 
-DROP TABLE IF EXISTS `cuenta_bancaria`;
 CREATE TABLE `cuenta_bancaria` (
   `id` int(11) NOT NULL,
   `iban` varchar(24) NOT NULL,
-  `saldo` float NOT NULL DEFAULT 0,
+  `saldo` float NOT NULL DEFAULT '0',
   `fecha_creacion` date DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- RELACIONES PARA LA TABLA `cuenta_bancaria`:
---   `user_id`
---       `user` -> `id`
---
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `movimiento`
 --
--- Creación: 04-01-2023 a las 10:18:55
---
 
-DROP TABLE IF EXISTS `movimiento`;
 CREATE TABLE `movimiento` (
   `id` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `valor` float NOT NULL,
   `cuenta_origen` int(11) DEFAULT NULL,
   `cuenta_destino` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- RELACIONES PARA LA TABLA `movimiento`:
---   `cuenta_destino`
---       `cuenta_bancaria` -> `id`
---   `cuenta_origen`
---       `cuenta_bancaria` -> `id`
---
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `recibo_domiciliado`
 --
--- Creación: 04-01-2023 a las 10:23:03
---
 
-DROP TABLE IF EXISTS `recibo_domiciliado`;
 CREATE TABLE `recibo_domiciliado` (
   `id` int(11) NOT NULL,
   `concepto` varchar(128) NOT NULL,
   `fecha` date NOT NULL,
-  `valor` float NOT NULL DEFAULT 0,
+  `valor` float NOT NULL DEFAULT '0',
   `cuenta_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- RELACIONES PARA LA TABLA `recibo_domiciliado`:
---   `cuenta_id`
---       `cuenta_bancaria` -> `id`
---
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `respuesta`
 --
--- Creación: 04-01-2023 a las 10:43:36
---
 
-DROP TABLE IF EXISTS `respuesta`;
 CREATE TABLE `respuesta` (
   `id` int(11) NOT NULL,
   `contenido` text NOT NULL,
@@ -129,27 +91,14 @@ CREATE TABLE `respuesta` (
   `consulta_id` int(11) NOT NULL,
   `gestor_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- RELACIONES PARA LA TABLA `respuesta`:
---   `consulta_id`
---       `consulta` -> `id`
---   `gestor_id`
---       `user` -> `id`
---   `user_id`
---       `user` -> `id`
---
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tarjeta`
 --
--- Creación: 04-01-2023 a las 10:30:43
---
 
-DROP TABLE IF EXISTS `tarjeta`;
 CREATE TABLE `tarjeta` (
   `id` int(11) NOT NULL,
   `numero` int(16) NOT NULL,
@@ -160,23 +109,14 @@ CREATE TABLE `tarjeta` (
   `limite_minimo` float NOT NULL,
   `fecha_caducidad` date NOT NULL,
   `cuenta_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- RELACIONES PARA LA TABLA `tarjeta`:
---   `cuenta_id`
---       `cuenta_bancaria` -> `id`
---
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `user`
 --
--- Creación: 04-01-2023 a las 10:10:06
---
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `dni` varchar(9) NOT NULL,
@@ -184,12 +124,10 @@ CREATE TABLE `user` (
   `lastName` varchar(100) NOT NULL,
   `password` varchar(128) NOT NULL,
   `email` varchar(128) NOT NULL,
-  `fechaNacimiento` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Tabla de usuarios registrados en el sistema';
-
---
--- RELACIONES PARA LA TABLA `user`:
---
+  `fechaNacimiento` date DEFAULT NULL,
+  `rol` varchar(64) NOT NULL,
+  `profilePicture` blob NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla de usuarios registrados en el sistema';
 
 --
 -- Índices para tablas volcadas
@@ -337,3 +275,7 @@ ALTER TABLE `respuesta`
 ALTER TABLE `tarjeta`
   ADD CONSTRAINT `cuenta_tarjeta` FOREIGN KEY (`cuenta_id`) REFERENCES `cuenta_bancaria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
