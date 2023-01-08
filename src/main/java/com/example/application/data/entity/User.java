@@ -40,35 +40,35 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column(nullable = false, length = 100)
+	@Column(name = "lastName", nullable = false, length = 100)
     private String lastName;
 	
-	@Column(nullable = false, length = 100)
+	@Column(name = "name", nullable = false, length = 100)
     private String name;
 	
-	@Column(nullable = false, length = 128)
+	@Column(name = "email", nullable = false, length = 128)
     private String email;
 	
-	@Column(nullable = false, length = 9)
+	@Column(name = "dni", nullable = false, length = 9)
     private String dni;
 	
-	@Column(nullable = false)
+	@Column(name = "fechaNacimiento", nullable = false)
     private Date fechaNacimiento;
 	
     @JsonIgnore
-    @Column(nullable = false, length = 128)
+    @Column(name="password", nullable = false, length = 128)
     private String password;
     
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name="roles", nullable = false)
     private Role roles;
     
     @OneToMany(mappedBy = "titular")
    	private List<CuentaBancaria> Cuentas;
     
     @Lob
-    @Column(length = 128)
-    private String profilePicture;
+    @Column(name = "profile_picture", length = 128)
+    private String profile_picture;
     
     @OneToMany(mappedBy = "cliente")
    	private List<Consulta> ConsultasC;
@@ -82,9 +82,8 @@ public class User {
     @OneToMany(mappedBy = "gestor")
    	private List<Respuesta> RespuestasG;
 
-    @Transient
-	private UserRepository repository;
-    
+
+        
     public User() {
     }
 
@@ -92,9 +91,9 @@ public class User {
     	return id;
     }
     
-    public void setId() {
-    	this.id = repository.findLastId();
-	}
+    /*public void setId() {
+    	this.id = UserService.lastId();
+	}*/
     
     public String getDni() {
 		return dni;
@@ -147,14 +146,14 @@ public class User {
         this.roles = roles;
     }
     public String getProfilePicture() {
-        return profilePicture;
+        return profile_picture;
     }
     public void setProfilePicture(String profilePicture) {
-        this.profilePicture = profilePicture;
+        this.profile_picture = profilePicture;
     }
         
     public User(String username, String name, String email, String dni, Date fechaNac, String hashedPass, Role rol, String profilePicture) {
-    	setId();
+    	this.id=(Integer) null;
     	setLastName(username);
     	setName(name);
     	setEmail(email);

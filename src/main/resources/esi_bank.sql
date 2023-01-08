@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-01-2023 a las 20:00:49
+-- Tiempo de generación: 08-01-2023 a las 18:45:53
 -- Versión del servidor: 8.0.17
 -- Versión de PHP: 8.1.11
 
@@ -65,7 +65,7 @@ CREATE TABLE `hibernate_sequence` (
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-(1);
+(3);
 
 -- --------------------------------------------------------
 
@@ -142,8 +142,6 @@ CREATE TABLE `user` (
   `password` varchar(128) NOT NULL,
   `email` varchar(128) NOT NULL,
   `fechaNacimiento` date DEFAULT NULL,
-  `fecha_nacimiento` datetime(6) NOT NULL,
-  `last_name` varchar(100) NOT NULL,
   `profile_picture` longtext,
   `roles` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla de usuarios registrados en el sistema';
@@ -284,6 +282,7 @@ ALTER TABLE `recibo_domiciliado`
 -- Filtros para la tabla `respuesta`
 --
 ALTER TABLE `respuesta`
+  ADD CONSTRAINT `FK2cla4fey11q2o9i0lh926dvvi` FOREIGN KEY (`consulta_id`) REFERENCES `consulta` (`id`),
   ADD CONSTRAINT `FK7iu4gn6yc1dro8t0ww9s1ag28` FOREIGN KEY (`gestor_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FKgmeaje6r2ywce6ifwcb1vi6ql` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `Respuesta-Consulta` FOREIGN KEY (`consulta_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

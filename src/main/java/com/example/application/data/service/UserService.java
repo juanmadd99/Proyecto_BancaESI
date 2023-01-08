@@ -13,6 +13,7 @@ import javax.persistence.Query;
 
 import lombok.RequiredArgsConstructor;
 import org.vaadin.crudui.crud.CrudListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +28,12 @@ public class UserService implements CrudListener<User> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private UserRepository repository;
+	private static UserRepository repository;
+	
+	@Autowired
+	public UserService(UserRepository repository) {
+		UserService.repository = repository;
+	}
 
 	//Métodos de CrudListener<User>
 	
@@ -67,7 +73,7 @@ public class UserService implements CrudListener<User> {
 		repository.delete(domainObjectToDelete);
 	}
 	
-	public int lastId() {
+	public static int lastId() {
 		return repository.findLastId();
 	}
 }

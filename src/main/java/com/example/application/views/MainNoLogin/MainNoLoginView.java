@@ -2,7 +2,9 @@ package com.example.application.views.MainNoLogin;
 
 import com.example.application.components.appnav.AppNav;
 
+
 import com.example.application.components.appnav.AppNavItem;
+import com.example.application.data.Role;
 import com.example.application.data.entity.User;
 import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
@@ -40,7 +42,13 @@ import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import java.io.ByteArrayInputStream;
+import java.util.Date;
 import java.util.Optional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
 @AnonymousAllowed
 @PageTitle("Home")
@@ -48,10 +56,15 @@ import java.util.Optional;
 public class MainNoLoginView extends VerticalLayout {
 
     private H2 viewTitle;
+    
+    @PersistenceContext(name = "UnidadUser")
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory("UnidadUser");
+	@PersistenceContext(name = "UnidadUser")
+	EntityManager em = emf.createEntityManager();
 
     public MainNoLoginView() {
     	setSpacing(false);
-    	
+    	    	
     	Image img = new Image("images/sacar_dinero.png", "sacar dinero");
         img.setWidth("400px");
         img.setHeight("300px");
