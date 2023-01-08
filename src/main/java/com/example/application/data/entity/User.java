@@ -63,18 +63,24 @@ public class User extends AbstractEntity {
     @Column(nullable = false)
     private Role roles;
     
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "titular")
    	private List<CuentaBancaria> Cuentas;
     
     @Lob
     @Column(length = 128)
     private String profilePicture;
     
-    @OneToMany(mappedBy = "user")
-   	private List<Consulta> Consultas;
+    @OneToMany(mappedBy = "cliente")
+   	private List<Consulta> ConsultasC;
+    
+    @OneToMany(mappedBy = "gestor")
+   	private List<Consulta> ConsultasG;
     
     @OneToMany(mappedBy = "user")
-   	private List<Respuesta> Respuestas;
+   	private List<Respuesta> RespuestasC;
+    
+    @OneToMany(mappedBy = "gestor")
+   	private List<Respuesta> RespuestasG;
 
     @Transient
 	private UserRepository repository;
