@@ -81,6 +81,9 @@ public class User extends AbstractEntity {
     
     @OneToMany(mappedBy = "gestor")
    	private List<Respuesta> Respuestas_g;
+
+    @Transient
+	private UserRepository repository;
     
     public User() {
     }
@@ -90,7 +93,6 @@ public class User extends AbstractEntity {
     }
     
     public void setId() {
-    	UserRepository repository = null;
     	this.id = repository.findLastId();
 	}
     
