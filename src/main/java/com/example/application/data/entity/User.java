@@ -34,7 +34,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "user")
-public class User extends AbstractEntity {
+public class User {
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)

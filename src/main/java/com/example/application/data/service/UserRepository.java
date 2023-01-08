@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-	@Query("select u from user where u.lastName = :lastName")
+	//Nombre de la tabla (from) debe ser el de la clase (User con mayusc)
+	@Query("select u from User u where u.lastName = :lastName")
 	User findBylastName(@Param("lastName") String lastName);
 	
-	@Query("select max(u.id) from user u")
+	@Query("select max(u.id) from User u")
 	int findLastId();
 }
