@@ -7,6 +7,8 @@ import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * The entry point of the Spring Boot application.
@@ -16,6 +18,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  */
 @SpringBootApplication
+@EnableJpaRepositories(basePackages = "com.example.applicarion.data.service")
 @Theme(value = "myapp", variant = Lumo.DARK)
 @PWA(name = "My App", shortName = "My App", offlineResources = {})
 @NpmPackage(value = "line-awesome", version = "1.3.0")
