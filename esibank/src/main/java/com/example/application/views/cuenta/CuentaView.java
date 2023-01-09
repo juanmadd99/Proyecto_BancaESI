@@ -6,6 +6,7 @@ import com.example.application.data.service.SamplePersonService;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.CheckboxGroup;
@@ -15,17 +16,32 @@ import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.OrderedList;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import com.vaadin.flow.theme.lumo.LumoUtility;
+import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems;
+import com.vaadin.flow.theme.lumo.LumoUtility.Display;
+import com.vaadin.flow.theme.lumo.LumoUtility.FontSize;
+import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
+import com.vaadin.flow.theme.lumo.LumoUtility.JustifyContent;
+import com.vaadin.flow.theme.lumo.LumoUtility.ListStyleType;
+import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
+import com.vaadin.flow.theme.lumo.LumoUtility.MaxWidth;
+import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
+import com.vaadin.flow.theme.lumo.LumoUtility.TextColor;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.security.PermitAll;
@@ -36,6 +52,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import com.example.application.views.noticias.*;
 
 @PageTitle("Cuenta")
 @Route(value = "Cuenta", layout = MainLayout.class)
@@ -47,6 +64,7 @@ public class CuentaView extends Div {
 
     private Filters filters;
     private final SamplePersonService samplePersonService;
+    private OrderedList imageContainer;
 
     public CuentaView(SamplePersonService SamplePersonService) {
         this.samplePersonService = SamplePersonService;
@@ -54,13 +72,53 @@ public class CuentaView extends Div {
         addClassNames("cuenta-view");
 
         filters = new Filters(() -> refreshGrid());
-        VerticalLayout layout = new VerticalLayout(createMobileFilters(), filters, createGrid());
-        layout.setSizeFull();
+        VerticalLayout layout = new VerticalLayout(createMobileFilters(), filters, createGrid(), Algo());
+        //layout.setSizeFull();
         layout.setPadding(false);
         layout.setSpacing(false);
         add(layout);
     }
 
+    private HorizontalLayout Algo() {
+    	HorizontalLayout algo = new HorizontalLayout();
+    	 Accordion accordion = new Accordion();
+
+         Span name = new Span("Sophia Williams");
+         Span email = new Span("sophia.williams@company.com");
+         Span phone = new Span("(501) 555-9128");
+
+         VerticalLayout personalInformationLayout = new VerticalLayout(name,
+                 email, phone);
+         personalInformationLayout.setSpacing(false);
+         personalInformationLayout.setPadding(false);
+
+         accordion.add("Personal information", personalInformationLayout);
+
+         Span street = new Span("4027 Amber Lake Canyon");
+         Span zipCode = new Span("72333-5884 Cozy Nook");
+         Span city = new Span("Arkansas");
+
+         VerticalLayout billingAddressLayout = new VerticalLayout();
+         billingAddressLayout.setSpacing(false);
+         billingAddressLayout.setPadding(false);
+         billingAddressLayout.add(street, zipCode, city);
+         accordion.add("Billing address", billingAddressLayout);
+
+         Span cardBrand = new Span("Mastercard");
+         Span cardNumber = new Span("1234 5678 9012 3456");
+         Span expiryDate = new Span("Expires 06/21");
+
+         VerticalLayout paymentLayout = new VerticalLayout();
+         paymentLayout.setSpacing(true);
+         paymentLayout.setPadding(true);
+         paymentLayout.add(cardBrand, cardNumber, expiryDate);
+         accordion.add("Payment", paymentLayout);
+
+         algo.add(accordion);
+         algo.setSpacing(true);
+         algo.setPadding(true);
+    	return algo;
+    }
     private HorizontalLayout createMobileFilters() {
         // Mobile version
         HorizontalLayout mobileFilters = new HorizontalLayout();
