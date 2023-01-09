@@ -34,7 +34,7 @@ public class NoticiasView extends Main implements HasComponents, HasStyle {
     public NoticiasView() {
         constructUI();
 
-        imageContainer.add(new NoticiasViewCard("Snow mountains under stars",
+        imageContainer.add(new NoticiasViewCard("Agrega tu nominna y te regalamos 100$",
                 "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"));
         imageContainer.add(new NoticiasViewCard("Snow covered mountain",
                 "https://images.unsplash.com/photo-1512273222628-4daea6e55abb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"));
