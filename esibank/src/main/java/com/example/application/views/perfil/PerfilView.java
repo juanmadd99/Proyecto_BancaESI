@@ -71,6 +71,19 @@ public class PerfilView extends VerticalLayout {
             "El nombre debe tener al menos 3 caracteres de longitud")
         .bind(User::getName, User::setName);
         
+        binder.setBean(userActual);
+        Button saveButton = new Button("Guardar", event -> {
+            if (binder.validate().isOk()) {
+                // person is always up-to-date as long as
+                // there are no validation errors
+            	userservice.update(userActual);
+            }
+        });
+        //////////////////////////////
+        //PASSWORD FORM				//
+        /////////////////////////////
+        
+        /*
         binder.forField(hashedPassword)
         // Validator defined based on a lambda
         // and an error message
@@ -87,11 +100,7 @@ public class PerfilView extends VerticalLayout {
             "Las contraseñas deben ser iguales")
         .bind(User::getHashedPassword, User::setHashedPassword);
         
-        
-        
         binder.setBean(userActual);
-        
-
         Button saveButton = new Button("Guardar", event -> {
             if (binder.validate().isOk()) {
                 // person is always up-to-date as long as
@@ -100,7 +109,7 @@ public class PerfilView extends VerticalLayout {
             	userservice.update(userActual);
             }
         });
-        
+        */
       
         
         
