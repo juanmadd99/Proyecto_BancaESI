@@ -3,7 +3,6 @@ package com.example.application.data.entity;
 import com.example.application.data.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Column;
@@ -19,16 +18,15 @@ import javax.persistence.Table;
 @Table(name = "movimiento")
 public class Movimiento extends AbstractEntity {
 	
-	private LocalDate dFecha;
-	private String concepto;
+	private Date dFecha;
 	private Float fValor;
 	private String cuentaOrigen;
 	private String cuentaDestino;
 	
-	public LocalDate getdFecha() {
+	public Date getdFecha() {
 		return dFecha;
 	}
-	public void setdFecha(LocalDate dFecha) {
+	public void setdFecha(Date dFecha) {
 		this.dFecha = dFecha;
 	}
 	public Float getfValor() {
@@ -48,12 +46,6 @@ public class Movimiento extends AbstractEntity {
 	}
 	public void setCuentaDestino(String cuentaDestino) {
 		this.cuentaDestino = cuentaDestino;
-	}
-	public String getConcepto() {
-		return concepto;
-	}
-	public void setConcepto(String c) {
-		concepto = c;
 	}
 	
 	

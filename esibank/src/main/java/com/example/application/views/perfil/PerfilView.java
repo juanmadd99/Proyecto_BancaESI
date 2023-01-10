@@ -111,6 +111,10 @@ public class PerfilView extends VerticalLayout {
         });
         */
       
+        
+        
+
+
         FormLayout formLayout = new FormLayout();
         formLayout.add( username, hashedPassword,confirmPassword);
         formLayout.setResponsiveSteps(

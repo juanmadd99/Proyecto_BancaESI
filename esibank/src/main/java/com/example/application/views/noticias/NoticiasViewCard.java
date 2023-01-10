@@ -21,7 +21,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Width;
 
 public class NoticiasViewCard extends ListItem {
 
-    public NoticiasViewCard(String title, String paragraph, String text, String url) {
+    public NoticiasViewCard(String text, String url) {
         addClassNames(Background.CONTRAST_5, Display.FLEX, FlexDirection.COLUMN, AlignItems.START, Padding.MEDIUM,
                 BorderRadius.LARGE);
 
@@ -39,12 +39,21 @@ public class NoticiasViewCard extends ListItem {
 
         Span header = new Span();
         header.addClassNames(FontSize.XLARGE, FontWeight.SEMIBOLD);
-        header.setText(title);
+        header.setText("Title");
 
-        Paragraph description = new Paragraph(paragraph);
+        Span subtitle = new Span();
+        subtitle.addClassNames(FontSize.SMALL, TextColor.SECONDARY);
+        subtitle.setText("Card subtitle");
+
+        Paragraph description = new Paragraph(
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.");
         description.addClassName(Margin.Vertical.MEDIUM);
 
-        add(div, header, description);
+        Span badge = new Span();
+        badge.getElement().setAttribute("theme", "badge");
+        badge.setText("Label");
+
+        add(div, header, subtitle, description, badge);
 
     }
 }
