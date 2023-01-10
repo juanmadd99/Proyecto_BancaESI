@@ -3,6 +3,10 @@ package com.example.application.views.cuenta;
 
 import com.example.application.data.entity.SamplePerson;
 import com.example.application.data.service.SamplePersonService;
+import com.example.application.data.entity.Tarjeta;
+import com.example.application.data.service.TarjetaService;
+import com.example.application.data.service.UserService;
+import com.example.application.security.AuthenticatedUser;
 import com.example.application.data.entity.Movimiento;
 import com.example.application.data.service.MovimientoService;
 import com.example.application.views.MainLayout;
@@ -32,6 +36,7 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems;
@@ -65,6 +70,9 @@ import com.example.application.views.noticias.*;
 public class CuentaView extends Div {
 
     private Grid<Movimiento> grid;
+    private AuthenticatedUser authenticatedUser;
+	private AccessAnnotationChecker accessChecker;
+	private UserService userservice;
 
     private Filters filters;
     private final MovimientoService movimientoService;
@@ -85,11 +93,12 @@ public class CuentaView extends Div {
 
     private HorizontalLayout Algo() {
     	HorizontalLayout algo = new HorizontalLayout();
-    	 Accordion accordion = new Accordion();
+    	 Accordion accordion = new Accordion(); 	
 
          Span name = new Span("Sophia Williams");
          Span email = new Span("sophia.williams@company.com");
          Span phone = new Span("(501) 555-9128");
+         
 
          VerticalLayout personalInformationLayout = new VerticalLayout(name,
                  email, phone);
@@ -106,7 +115,7 @@ public class CuentaView extends Div {
          billingAddressLayout.setSpacing(false);
          billingAddressLayout.setPadding(false);
          billingAddressLayout.add(street, zipCode, city);
-         accordion.add("Billing address", billingAddressLayout);
+         accordion.add("Tarjetas", billingAddressLayout);
 
          Span cardBrand = new Span("Mastercard");
          Span cardNumber = new Span("1234 5678 9012 3456");
@@ -116,11 +125,11 @@ public class CuentaView extends Div {
          paymentLayout.setSpacing(true);
          paymentLayout.setPadding(true);
          paymentLayout.add(cardBrand, cardNumber, expiryDate);
-         accordion.add("Payment", paymentLayout);
+         accordion.add("Tarjeta 2", paymentLayout);
 
          algo.add(accordion);
-         algo.setSpacing(true);
-         algo.setPadding(true);
+         algo.setSpacing(false);
+         algo.setPadding(false);
     	return algo;
     }
     
@@ -239,19 +248,7 @@ public class CuentaView extends Div {
                         lowerCaseFilter + "%");
                 predicates.add(criteriaBuilder.or(cuentaDestinoMATCH));
             }
-            /*
-            if (!valor.isEmpty()) {
-                String databaseColumn = "phone";
-                String ignore = "- ()";
-
-                String lowerCaseFilter = ignoreCharacters(ignore, valor.getValue().toLowerCase());
-                Predicate phoneMatch = criteriaBuilder.like(
-                        ignoreCharacters(ignore, criteriaBuilder, criteriaBuilder.lower(root.get(databaseColumn))),
-                        "%" + lowerCaseFilter + "%");
-                predicates.add(phoneMatch);
-
-            }
-            */
+          
             if (startDate.getValue() != null) {
                 String databaseColumn = "dFecha";
                 predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(databaseColumn),
@@ -262,28 +259,9 @@ public class CuentaView extends Div {
                 predicates.add(criteriaBuilder.greaterThanOrEqualTo(criteriaBuilder.literal(endDate.getValue()),
                         root.get(databaseColumn)));
             }
-            /*
-            if (!occupations.isEmpty()) {
-                String databaseColumn = "occupation";
-                List<Predicate> occupationPredicates = new ArrayList<>();
-                for (String occupation : occupations.getValue()) {
-                    occupationPredicates
-                            .add(criteriaBuilder.equal(criteriaBuilder.literal(occupation), root.get(databaseColumn)));
-                }
-                predicates.add(criteriaBuilder.or(occupationPredicates.toArray(Predicate[]::new)));
-            }
-            */
+           
             
-            /*
-            if (!roles.isEmpty()) {
-                String databaseColumn = "role";
-                List<Predicate> rolePredicates = new ArrayList<>();
-                for (String role : roles.getValue()) {
-                    rolePredicates.add(criteriaBuilder.equal(criteriaBuilder.literal(role), root.get(databaseColumn)));
-                }
-                predicates.add(criteriaBuilder.or(rolePredicates.toArray(Predicate[]::new)));
-            }
-            */
+          
             return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
         }
 
