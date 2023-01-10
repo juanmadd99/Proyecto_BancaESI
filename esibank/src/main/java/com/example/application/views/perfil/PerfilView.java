@@ -1,5 +1,4 @@
 package com.example.application.views.perfil;
-
 import com.example.application.data.entity.User;
 import com.example.application.data.service.UserService;
 import com.example.application.security.AuthenticatedUser;
@@ -26,13 +25,9 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.shared.Registration;
-
 import net.bytebuddy.asm.Advice.This;
-
 import java.util.Optional;
-
 import javax.annotation.security.PermitAll;
-
 @PageTitle("Perfil")
 @Route(value = "Perfil", layout = MainLayout.class)
 @PermitAll
@@ -48,7 +43,6 @@ public class PerfilView extends VerticalLayout {
     PasswordField confirmPassword = new PasswordField("Confirm password");
     Binder<User> binder = new Binder<>(User.class);
     
-
     private void validateAndSave() {
     	if ( binder.isValid()) {
     		//fireEvent(new SaveEvent(this, binder.getBean()));
@@ -105,15 +99,10 @@ public class PerfilView extends VerticalLayout {
             if (binder.validate().isOk()) {
                 // person is always up-to-date as long as
                 // there are no validation errors
-
             	userservice.update(userActual);
             }
         });
         */
-      
-        
-        
-
 
         FormLayout formLayout = new FormLayout();
         formLayout.add( username, hashedPassword,confirmPassword);
@@ -134,7 +123,6 @@ public class PerfilView extends VerticalLayout {
         
         Span name = new Span(userActual.getName());
         Span phone = new Span("(501) 555-9128");
-
         VerticalLayout content = new VerticalLayout(name, phone);
         content.setSpacing(false);
         content.setPadding(false);
@@ -142,7 +130,6 @@ public class PerfilView extends VerticalLayout {
         VerticalLayout formulario = new VerticalLayout( username, hashedPassword, confirmPassword, saveButton);
         content.setSpacing(false);
         content.setPadding(false);
-
         Details details = new Details("Contact information", content);
         details.setOpened(true);
         add(details);
@@ -156,13 +143,10 @@ public class PerfilView extends VerticalLayout {
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         getStyle().set("text-align", "center");
     }
-
 	private void notifyValidationException(ValidationException e) {
 		// TODO Auto-generated method stub
 		
 	}
 	
 	
-
 }
-

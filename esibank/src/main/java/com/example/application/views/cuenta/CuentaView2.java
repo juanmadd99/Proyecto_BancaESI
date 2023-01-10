@@ -61,18 +61,14 @@ import com.example.application.views.noticias.*;
 @PermitAll
 @Uses(Icon.class)
 public class CuentaView2 extends Div {
-
     private Grid<SamplePerson> grid;
-
     private Filters filters;
     private final SamplePersonService samplePersonService;
     private OrderedList imageContainer;
-
     public CuentaView(SamplePersonService SamplePersonService) {
         this.samplePersonService = SamplePersonService;
         setSizeFull();
         addClassNames("cuenta-view");
-
         filters = new Filters(() -> refreshGrid());
         VerticalLayout layout = new VerticalLayout(createMobileFilters(), filters, createGrid(), Algo());
         //layout.setSizeFull();
@@ -80,42 +76,33 @@ public class CuentaView2 extends Div {
         layout.setSpacing(false);
         add(layout);
     }
-
     private HorizontalLayout Algo() {
     	HorizontalLayout algo = new HorizontalLayout();
     	 Accordion accordion = new Accordion();
-
          Span name = new Span("Sophia Williams");
          Span email = new Span("sophia.williams@company.com");
          Span phone = new Span("(501) 555-9128");
-
          VerticalLayout personalInformationLayout = new VerticalLayout(name,
                  email, phone);
          personalInformationLayout.setSpacing(false);
          personalInformationLayout.setPadding(false);
-
          accordion.add("Personal information", personalInformationLayout);
-
          Span street = new Span("4027 Amber Lake Canyon");
          Span zipCode = new Span("72333-5884 Cozy Nook");
          Span city = new Span("Arkansas");
-
          VerticalLayout billingAddressLayout = new VerticalLayout();
          billingAddressLayout.setSpacing(false);
          billingAddressLayout.setPadding(false);
          billingAddressLayout.add(street, zipCode, city);
          accordion.add("Billing address", billingAddressLayout);
-
          Span cardBrand = new Span("Mastercard");
          Span cardNumber = new Span("1234 5678 9012 3456");
          Span expiryDate = new Span("Expires 06/21");
-
          VerticalLayout paymentLayout = new VerticalLayout();
          paymentLayout.setSpacing(true);
          paymentLayout.setPadding(true);
          paymentLayout.add(cardBrand, cardNumber, expiryDate);
          accordion.add("Payment", paymentLayout);
-
          algo.add(accordion);
          algo.setSpacing(true);
          algo.setPadding(true);
@@ -128,7 +115,6 @@ public class CuentaView2 extends Div {
         mobileFilters.addClassNames(LumoUtility.Padding.MEDIUM, LumoUtility.BoxSizing.BORDER,
                 LumoUtility.AlignItems.CENTER);
         mobileFilters.addClassName("mobile-filters");
-
         Icon mobileIcon = new Icon("lumo", "plus");
         Span filtersHeading = new Span("Filters");
         mobileFilters.add(mobileIcon, filtersHeading);
@@ -144,29 +130,22 @@ public class CuentaView2 extends Div {
         });
         return mobileFilters;
     }
-
     public static class Filters extends Div implements Specification<SamplePerson> {
-
         private final TextField name = new TextField("Name");
         private final TextField phone = new TextField("Phone");
         private final DatePicker startDate = new DatePicker("Date of Birth");
         private final DatePicker endDate = new DatePicker();
         private final MultiSelectComboBox<String> occupations = new MultiSelectComboBox<>("Occupation");
         private final CheckboxGroup<String> roles = new CheckboxGroup<>("Role");
-
         public Filters(Runnable onSearch) {
-
             setWidthFull();
             addClassName("filter-layout");
             addClassNames(LumoUtility.Padding.Horizontal.LARGE, LumoUtility.Padding.Vertical.MEDIUM,
                     LumoUtility.BoxSizing.BORDER);
             name.setPlaceholder("First or last name");
-
             occupations.setItems("Insurance Clerk", "Mortarman", "Beer Coil Cleaner", "Scale Attendant");
-
             roles.setItems("Worker", "Supervisor", "Manager", "External");
             roles.addClassName("double-width");
-
             // Action buttons
             Button resetBtn = new Button("Reset");
             resetBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
@@ -182,40 +161,30 @@ public class CuentaView2 extends Div {
             Button searchBtn = new Button("Search");
             searchBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
             searchBtn.addClickListener(e -> onSearch.run());
-
             Div actions = new Div(resetBtn, searchBtn);
             actions.addClassName(LumoUtility.Gap.SMALL);
             actions.addClassName("actions");
-
             add(name, phone, createDateRangeFilter(), occupations, roles, actions);
         }
-
         private Component createDateRangeFilter() {
             startDate.setPlaceholder("From");
-
             endDate.setPlaceholder("To");
-
             // For screen readers
             setAriaLabel(startDate, "From date");
             setAriaLabel(endDate, "To date");
-
             FlexLayout dateRangeComponent = new FlexLayout(startDate, new Text(" – "), endDate);
             dateRangeComponent.setAlignItems(FlexComponent.Alignment.BASELINE);
             dateRangeComponent.addClassName(LumoUtility.Gap.XSMALL);
-
             return dateRangeComponent;
         }
-
         private void setAriaLabel(DatePicker datePicker, String label) {
             datePicker.getElement().executeJs("const input = this.inputElement;" //
                     + "input.setAttribute('aria-label', $0);" //
                     + "input.removeAttribute('aria-labelledby');", label);
         }
-
         @Override
         public Predicate toPredicate(Root<SamplePerson> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
             List<Predicate> predicates = new ArrayList<>();
-
             if (!name.isEmpty()) {
                 String lowerCaseFilter = name.getValue().toLowerCase();
                 Predicate firstNameMatch = criteriaBuilder.like(criteriaBuilder.lower(root.get("firstName")),
@@ -227,13 +196,11 @@ public class CuentaView2 extends Div {
             if (!phone.isEmpty()) {
                 String databaseColumn = "phone";
                 String ignore = "- ()";
-
                 String lowerCaseFilter = ignoreCharacters(ignore, phone.getValue().toLowerCase());
                 Predicate phoneMatch = criteriaBuilder.like(
                         ignoreCharacters(ignore, criteriaBuilder, criteriaBuilder.lower(root.get(databaseColumn))),
                         "%" + lowerCaseFilter + "%");
                 predicates.add(phoneMatch);
-
             }
             if (startDate.getValue() != null) {
                 String databaseColumn = "dateOfBirth";
@@ -264,7 +231,6 @@ public class CuentaView2 extends Div {
             }
             return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
         }
-
         private String ignoreCharacters(String characters, String in) {
             String result = in;
             for (int i = 0; i < characters.length(); i++) {
@@ -272,7 +238,6 @@ public class CuentaView2 extends Div {
             }
             return result;
         }
-
         private Expression<String> ignoreCharacters(String characters, CriteriaBuilder criteriaBuilder,
                 Expression<String> inExpression) {
             Expression<String> expression = inExpression;
@@ -282,9 +247,7 @@ public class CuentaView2 extends Div {
             }
             return expression;
         }
-
     }
-
     private Component createGrid() {
         grid = new Grid<>(SamplePerson.class, false);
         grid.addColumn("firstName").setAutoWidth(true);
@@ -294,20 +257,15 @@ public class CuentaView2 extends Div {
         grid.addColumn("dateOfBirth").setAutoWidth(true);
         grid.addColumn("occupation").setAutoWidth(true);
         grid.addColumn("role").setAutoWidth(true);
-
         grid.setItems(query -> samplePersonService.list(
                 PageRequest.of(query.getPage(), query.getPageSize(), VaadinSpringDataHelpers.toSpringDataSort(query)),
                 filters).stream());
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
         grid.addClassNames(LumoUtility.Border.TOP, LumoUtility.BorderColor.CONTRAST_10);
-
         return grid;
     }
-
     private void refreshGrid() {
         grid.getDataProvider().refreshAll();
     }
-
 }
-
 */
