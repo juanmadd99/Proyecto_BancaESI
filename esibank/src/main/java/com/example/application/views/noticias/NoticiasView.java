@@ -34,18 +34,18 @@ public class NoticiasView extends Main implements HasComponents, HasStyle {
     public NoticiasView() {
         constructUI();
 
-        imageContainer.add(new NoticiasViewCard("Agrega tu nominna y te regalamos 100$",
-                "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"));
-        imageContainer.add(new NoticiasViewCard("Snow covered mountain",
-                "https://images.unsplash.com/photo-1512273222628-4daea6e55abb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"));
-        imageContainer.add(new NoticiasViewCard("River between mountains",
-                "https://images.unsplash.com/photo-1536048810607-3dc7f86981cb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=375&q=80"));
-        imageContainer.add(new NoticiasViewCard("Milky way on mountains",
-                "https://images.unsplash.com/photo-1515705576963-95cad62945b6?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80"));
-        imageContainer.add(new NoticiasViewCard("Mountain with fog",
-                "https://images.unsplash.com/photo-1513147122760-ad1d5bf68cdb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"));
-        imageContainer.add(new NoticiasViewCard("Mountain at night",
-                "https://images.unsplash.com/photo-1562832135-14a35d25edef?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=815&q=80"));
+        imageContainer.add(new NoticiasViewCard("Hipotecas Onilne","Digital desde el principio, atencion personal hasta el final.", "Hipotecas Onilne",
+                "https://s10.s3c.es/imag/_v0/1200x655/b/b/1/hipoteca-tipo-fijo-ocu-iStock-1328126737.jpg"));
+        imageContainer.add(new NoticiasViewCard("Planeta seguros","Agrupa tus seguros, paga mes a mes y podrás ahorrar hasta un 11%..", "Planeta seguros",
+                "https://www.bancosantander.es/wcm/connect/www.bancosantander.es24647/57c15fc2-548f-4c4c-ac7c-3e4412692cd6/720x450_banner-producto_centrado_planeta_seguros.jpg?MOD=AJPERES&CACHEID=ROOTWORKSPACE.Z18_O1A0HJ82O0E160Q2H3HV972000-57c15fc2-548f-4c4c-ac7c-3e4412692cd6-okWeHk1"));
+        imageContainer.add(new NoticiasViewCard("Sacar dinero sin tarjeta","Te explicamos de manera sencilla como sacar dinero con tu móvil paso por paso.", "Sacar dinero sin tarjeta",
+                "https://www.bancosantander.es/wcm/connect/www.bancosantander.es24647/272f925e-13d4-4dc6-b0b5-3351ca9749c4/704x430_imagen_sacar_dinero.jpg?MOD=AJPERES&CACHEID=ROOTWORKSPACE.Z18_O1A0HJ82O0E160Q2H3HV972000-272f925e-13d4-4dc6-b0b5-3351ca9749c4-nCDQA4d"));
+        imageContainer.add(new NoticiasViewCard("Seguridad","Descubre un mundo entero sobre ciberseguridad.", "Seguridad",
+                "https://blog.hubspot.es/hubfs/media/queesseguridadinformatica.jpeg"));
+        imageContainer.add(new NoticiasViewCard("Ahorros y depositos","Un seguro de ahorro para un futuro de diez.", "Ahorros y depositos",
+                "https://img.freepik.com/fotos-premium/pareja-abrazos-sentado-banco-mirador-contra-pintorescas-montanas-antiguas-al-atardecer-vista-trasera_255755-2465.jpg?w=2000"));
+        imageContainer.add(new NoticiasViewCard("Bizum","Paga con tu móvil de forma fácil y segura.", "Bizum",
+                "https://www.consumidorglobal.com/uploads/s1/36/03/6/tarjeta1.jpeg"));
 
     }
 
@@ -63,15 +63,11 @@ public class NoticiasView extends Main implements HasComponents, HasStyle {
         description.addClassNames(Margin.Bottom.XLARGE, Margin.Top.NONE, TextColor.SECONDARY);
         headerContainer.add(header, description);
 
-        Select<String> sortBy = new Select<>();
-        sortBy.setLabel("Sort by");
-        sortBy.setItems("Popularity", "Newest first", "Oldest first");
-        sortBy.setValue("Popularity");
 
         imageContainer = new OrderedList();
         imageContainer.addClassNames(Gap.MEDIUM, Display.GRID, ListStyleType.NONE, Margin.NONE, Padding.NONE);
 
-        container.add(headerContainer, sortBy);
+        container.add(headerContainer);
         add(container, imageContainer);
 
     }

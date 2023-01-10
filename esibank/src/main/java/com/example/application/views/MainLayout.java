@@ -75,7 +75,7 @@ public class MainLayout extends AppLayout {
         AppNav nav = new AppNav();
 
         if (accessChecker.hasAccess(InicioView.class)) {
-            nav.addItem(new AppNavItem("Inicio", InicioView.class, "la la-file"));
+            nav.addItem(new AppNavItem("Inicio", InicioView.class, "la la-home"));
 
         }
         if (accessChecker.hasAccess(CuentaView.class)) {
@@ -83,7 +83,7 @@ public class MainLayout extends AppLayout {
 
         }
         if (accessChecker.hasAccess(PerfilView.class)) {
-            nav.addItem(new AppNavItem("Perfil", PerfilView.class, "la la-file"));
+            nav.addItem(new AppNavItem("Perfil", PerfilView.class, "la la-user"));
 
         }
         if (accessChecker.hasAccess(TransferenciasView.class)) {
