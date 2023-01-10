@@ -28,7 +28,6 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
-import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -56,22 +55,21 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import com.example.application.views.noticias.*;
-
-@SuppressWarnings("serial")
+/*
 @PageTitle("Cuenta")
 @Route(value = "Cuenta", layout = MainLayout.class)
 @PermitAll
 @Uses(Icon.class)
-public class CuentaView extends Div {
+public class CuentaView2 extends Div {
 
-    private Grid<Movimiento> grid;
+    private Grid<SamplePerson> grid;
 
     private Filters filters;
-    private final MovimientoService movimientoService;
+    private final SamplePersonService samplePersonService;
     private OrderedList imageContainer;
 
-    public CuentaView(MovimientoService movimientoService) {
-        this.movimientoService = movimientoService;
+    public CuentaView(SamplePersonService SamplePersonService) {
+        this.samplePersonService = SamplePersonService;
         setSizeFull();
         addClassNames("cuenta-view");
 
@@ -123,7 +121,6 @@ public class CuentaView extends Div {
          algo.setPadding(true);
     	return algo;
     }
-    
     private HorizontalLayout createMobileFilters() {
         // Mobile version
         HorizontalLayout mobileFilters = new HorizontalLayout();
@@ -148,15 +145,14 @@ public class CuentaView extends Div {
         return mobileFilters;
     }
 
-    public static class Filters extends Div implements Specification<Movimiento> {
+    public static class Filters extends Div implements Specification<SamplePerson> {
 
-        private final TextField concepto = new TextField("concepto");
-        //private final NumberField fValor = new NumberField("Valor");
-        
-        private final DatePicker startDate = new DatePicker("Fecha de realizacion");
-        private final TextField cuentaOrigen = new TextField("Cuenta origen");
-        private final TextField cuentaDestino = new TextField("Cuenta destino");
+        private final TextField name = new TextField("Name");
+        private final TextField phone = new TextField("Phone");
+        private final DatePicker startDate = new DatePicker("Date of Birth");
         private final DatePicker endDate = new DatePicker();
+        private final MultiSelectComboBox<String> occupations = new MultiSelectComboBox<>("Occupation");
+        private final CheckboxGroup<String> roles = new CheckboxGroup<>("Role");
 
         public Filters(Runnable onSearch) {
 
@@ -164,23 +160,23 @@ public class CuentaView extends Div {
             addClassName("filter-layout");
             addClassNames(LumoUtility.Padding.Horizontal.LARGE, LumoUtility.Padding.Vertical.MEDIUM,
                     LumoUtility.BoxSizing.BORDER);
-           // name.setPlaceholder("First or last name");
+            name.setPlaceholder("First or last name");
 
-            //occupations.setItems("Insurance Clerk", "Mortarman", "Beer Coil Cleaner", "Scale Attendant");
+            occupations.setItems("Insurance Clerk", "Mortarman", "Beer Coil Cleaner", "Scale Attendant");
 
-           // roles.setItems("Worker", "Supervisor", "Manager", "External");
-           // roles.addClassName("double-width");
+            roles.setItems("Worker", "Supervisor", "Manager", "External");
+            roles.addClassName("double-width");
 
             // Action buttons
             Button resetBtn = new Button("Reset");
             resetBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
             resetBtn.addClickListener(e -> {
-            	concepto.clear();
-            	//fValor.clear();
+                name.clear();
+                phone.clear();
                 startDate.clear();
                 endDate.clear();
-                cuentaOrigen.clear();
-                cuentaDestino.clear();
+                occupations.clear();
+                roles.clear();
                 onSearch.run();
             });
             Button searchBtn = new Button("Search");
@@ -191,20 +187,22 @@ public class CuentaView extends Div {
             actions.addClassName(LumoUtility.Gap.SMALL);
             actions.addClassName("actions");
 
-            add(concepto, createDateRangeFilter(), cuentaOrigen, cuentaDestino, actions);
+            add(name, phone, createDateRangeFilter(), occupations, roles, actions);
         }
 
         private Component createDateRangeFilter() {
-            startDate.setPlaceholder("Desde");
-            endDate.setPlaceholder("Hasta");
+            startDate.setPlaceholder("From");
+
+            endDate.setPlaceholder("To");
 
             // For screen readers
-            setAriaLabel(startDate, "Desde");
-            setAriaLabel(endDate, "Hasta");
+            setAriaLabel(startDate, "From date");
+            setAriaLabel(endDate, "To date");
 
             FlexLayout dateRangeComponent = new FlexLayout(startDate, new Text(" – "), endDate);
             dateRangeComponent.setAlignItems(FlexComponent.Alignment.BASELINE);
             dateRangeComponent.addClassName(LumoUtility.Gap.XSMALL);
+
             return dateRangeComponent;
         }
 
@@ -215,54 +213,38 @@ public class CuentaView extends Div {
         }
 
         @Override
-        public Predicate toPredicate(Root<Movimiento> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+        public Predicate toPredicate(Root<SamplePerson> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (!concepto.isEmpty()) {
-                String lowerCaseFilter = concepto.getValue().toLowerCase();
-                Predicate conceptoMatch = criteriaBuilder.like(criteriaBuilder.lower(root.get("concepto")),
+            if (!name.isEmpty()) {
+                String lowerCaseFilter = name.getValue().toLowerCase();
+                Predicate firstNameMatch = criteriaBuilder.like(criteriaBuilder.lower(root.get("firstName")),
                         lowerCaseFilter + "%");
-                
-                predicates.add(criteriaBuilder.or(conceptoMatch));
-            }
-            
-            if (!cuentaOrigen.isEmpty()) {
-                String lowerCaseFilter = cuentaOrigen.getValue().toLowerCase();
-                Predicate cuentaOrigenMATCH = criteriaBuilder.like(criteriaBuilder.lower(root.get("cuentaOrigen")),
+                Predicate lastNameMatch = criteriaBuilder.like(criteriaBuilder.lower(root.get("lastName")),
                         lowerCaseFilter + "%");
-                predicates.add(criteriaBuilder.or(cuentaOrigenMATCH));
+                predicates.add(criteriaBuilder.or(firstNameMatch, lastNameMatch));
             }
-            
-            if (!cuentaDestino.isEmpty()) {
-                String lowerCaseFilter = cuentaDestino.getValue().toLowerCase();
-                Predicate cuentaDestinoMATCH = criteriaBuilder.like(criteriaBuilder.lower(root.get("cuentaDestino")),
-                        lowerCaseFilter + "%");
-                predicates.add(criteriaBuilder.or(cuentaDestinoMATCH));
-            }
-            /*
-            if (!valor.isEmpty()) {
+            if (!phone.isEmpty()) {
                 String databaseColumn = "phone";
                 String ignore = "- ()";
 
-                String lowerCaseFilter = ignoreCharacters(ignore, valor.getValue().toLowerCase());
+                String lowerCaseFilter = ignoreCharacters(ignore, phone.getValue().toLowerCase());
                 Predicate phoneMatch = criteriaBuilder.like(
                         ignoreCharacters(ignore, criteriaBuilder, criteriaBuilder.lower(root.get(databaseColumn))),
                         "%" + lowerCaseFilter + "%");
                 predicates.add(phoneMatch);
 
             }
-            */
             if (startDate.getValue() != null) {
-                String databaseColumn = "dFecha";
+                String databaseColumn = "dateOfBirth";
                 predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(databaseColumn),
                         criteriaBuilder.literal(startDate.getValue())));
             }
             if (endDate.getValue() != null) {
-                String databaseColumn = "dFecha";
+                String databaseColumn = "dateOfBirth";
                 predicates.add(criteriaBuilder.greaterThanOrEqualTo(criteriaBuilder.literal(endDate.getValue()),
                         root.get(databaseColumn)));
             }
-            /*
             if (!occupations.isEmpty()) {
                 String databaseColumn = "occupation";
                 List<Predicate> occupationPredicates = new ArrayList<>();
@@ -272,9 +254,6 @@ public class CuentaView extends Div {
                 }
                 predicates.add(criteriaBuilder.or(occupationPredicates.toArray(Predicate[]::new)));
             }
-            */
-            
-            /*
             if (!roles.isEmpty()) {
                 String databaseColumn = "role";
                 List<Predicate> rolePredicates = new ArrayList<>();
@@ -283,7 +262,6 @@ public class CuentaView extends Div {
                 }
                 predicates.add(criteriaBuilder.or(rolePredicates.toArray(Predicate[]::new)));
             }
-            */
             return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
         }
 
@@ -308,14 +286,16 @@ public class CuentaView extends Div {
     }
 
     private Component createGrid() {
-        grid = new Grid<>(Movimiento.class, false);
-        grid.addColumn("concepto").setAutoWidth(true);
-        grid.addColumn("fValor").setAutoWidth(true);
-        grid.addColumn("dFecha").setAutoWidth(true);
-        grid.addColumn("cuentaOrigen").setAutoWidth(true);
-        grid.addColumn("cuentaDestino").setAutoWidth(true);
+        grid = new Grid<>(SamplePerson.class, false);
+        grid.addColumn("firstName").setAutoWidth(true);
+        grid.addColumn("lastName").setAutoWidth(true);
+        grid.addColumn("email").setAutoWidth(true);
+        grid.addColumn("phone").setAutoWidth(true);
+        grid.addColumn("dateOfBirth").setAutoWidth(true);
+        grid.addColumn("occupation").setAutoWidth(true);
+        grid.addColumn("role").setAutoWidth(true);
 
-        grid.setItems(query -> movimientoService.list(
+        grid.setItems(query -> samplePersonService.list(
                 PageRequest.of(query.getPage(), query.getPageSize(), VaadinSpringDataHelpers.toSpringDataSort(query)),
                 filters).stream());
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
@@ -329,3 +309,5 @@ public class CuentaView extends Div {
     }
 
 }
+
+*/
