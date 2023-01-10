@@ -3,13 +3,8 @@ package com.example.application.views.cuenta;
 
 import com.example.application.data.entity.SamplePerson;
 import com.example.application.data.service.SamplePersonService;
-import com.example.application.data.entity.Tarjeta;
-import com.example.application.data.service.TarjetaService;
-import com.example.application.data.service.UserService;
-import com.example.application.security.AuthenticatedUser;
 import com.example.application.data.entity.Movimiento;
 import com.example.application.data.service.MovimientoService;
-
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
@@ -36,7 +31,6 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems;
@@ -61,17 +55,13 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import com.example.application.views.noticias.*;
-
+/*
 @PageTitle("Cuenta")
 @Route(value = "Cuenta", layout = MainLayout.class)
 @PermitAll
 @Uses(Icon.class)
-public class CuentaView extends Div {
+public class CuentaView2 extends Div {
 
-    private Grid<Movimiento> grid;
-    private AuthenticatedUser authenticatedUser;
-	private AccessAnnotationChecker accessChecker;
-	private UserService userservice;
     private Grid<SamplePerson> grid;
 
     private Filters filters;
@@ -93,12 +83,11 @@ public class CuentaView extends Div {
 
     private HorizontalLayout Algo() {
     	HorizontalLayout algo = new HorizontalLayout();
-    	 Accordion accordion = new Accordion(); 	
+    	 Accordion accordion = new Accordion();
 
          Span name = new Span("Sophia Williams");
          Span email = new Span("sophia.williams@company.com");
          Span phone = new Span("(501) 555-9128");
-         
 
          VerticalLayout personalInformationLayout = new VerticalLayout(name,
                  email, phone);
@@ -115,7 +104,7 @@ public class CuentaView extends Div {
          billingAddressLayout.setSpacing(false);
          billingAddressLayout.setPadding(false);
          billingAddressLayout.add(street, zipCode, city);
-         accordion.add("Tarjetas", billingAddressLayout);
+         accordion.add("Billing address", billingAddressLayout);
 
          Span cardBrand = new Span("Mastercard");
          Span cardNumber = new Span("1234 5678 9012 3456");
@@ -125,11 +114,11 @@ public class CuentaView extends Div {
          paymentLayout.setSpacing(true);
          paymentLayout.setPadding(true);
          paymentLayout.add(cardBrand, cardNumber, expiryDate);
-         accordion.add("Tarjeta 2", paymentLayout);
+         accordion.add("Payment", paymentLayout);
 
          algo.add(accordion);
-         algo.setSpacing(false);
-         algo.setPadding(false);
+         algo.setSpacing(true);
+         algo.setPadding(true);
     	return algo;
     }
     private HorizontalLayout createMobileFilters() {
@@ -320,3 +309,5 @@ public class CuentaView extends Div {
     }
 
 }
+
+*/
