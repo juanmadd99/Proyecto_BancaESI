@@ -11,7 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -27,7 +29,10 @@ public class Tarjeta extends AbstractEntity {
 	private Float limite_minimo;
 	private Float limite_maximo;
 	
-  
+	@ManyToOne
+	@JoinColumn(name = "cuenta_id")
+	private Cuenta cuenta;
+	
     public String getEmisor() {
 		return emisor;
 	}

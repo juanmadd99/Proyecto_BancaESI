@@ -1,8 +1,8 @@
 package com.example.application.data.entity;
+
 import com.example.application.data.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Column;
@@ -11,22 +11,42 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 @Entity
 @Table(name = "movimiento")
 public class Movimiento extends AbstractEntity {
-
-	private LocalDate dFecha;
 	private String concepto;
+	private Date dFecha;
 	private Float fValor;
-	private String cuentaOrigen;
-	private String cuentaDestino;
-
-	public LocalDate getdFecha() {
+	@Transient
+	private String cuentao;
+	@Transient
+	private String cuentad;
+	
+	@ManyToOne
+    @JoinColumn(name="cuenta_origen")
+    private Cuenta cuentaOrigen;
+		
+	@ManyToOne
+	@JoinColumn(name = "cuenta_destino")
+	private Cuenta cuentaDestino; //Si recibes dinero, tu cuenta es la destino.
+	
+	public String getConcepto() {
+		return concepto;
+	}
+	public void setConcepto(String concepto) {
+		this.concepto = concepto;
+	}
+	
+	public Date getdFecha() {
 		return dFecha;
 	}
-	public void setdFecha(LocalDate dFecha) {
+	public void setdFecha(Date dFecha) {
 		this.dFecha = dFecha;
 	}
 	public Float getfValor() {
@@ -35,7 +55,7 @@ public class Movimiento extends AbstractEntity {
 	public void setfValor(Float fValor) {
 		this.fValor = fValor;
 	}
-	public String getCuentaOrigen() {
+	/*public String getCuentaOrigen() {
 		return cuentaOrigen;
 	}
 	public void setCuentaOrigen(String cuentaOrigen) {
@@ -46,13 +66,7 @@ public class Movimiento extends AbstractEntity {
 	}
 	public void setCuentaDestino(String cuentaDestino) {
 		this.cuentaDestino = cuentaDestino;
-	}
-	public String getConcepto() {
-		return concepto;
-	}
-	public void setConcepto(String c) {
-		concepto = c;
-	}
-
-
+	}*/
+	
+	
 }

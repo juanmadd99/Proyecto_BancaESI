@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -15,6 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,14 +27,27 @@ public class Cuenta extends AbstractEntity {
 	private String titular; //USER
 	private Float saldo;
 	private LocalDate fechaCreacion;
-	private Integer tarjeta; //Tarjeta
+	//private Integer tarjeta; //Tarjeta
+	
 	//Lista de movimientos Origen
 	//Lista de movimientos Destino
 	//Lista de movimientos Recibos
 	
 	@ManyToOne
-    @JoinColumn(name="cuenta_id")
+    @JoinColumn(name="user_id")
     private User user;
+	
+	@OneToMany(mappedBy = "cuenta")
+   	private List<RecibosDomiciliados> Recibos;
+	
+	@OneToMany(mappedBy = "cuenta")
+   	private List<Tarjeta> Tarjetas;
+	
+	@OneToMany(mappedBy = "cuentaOrigen")
+	private List<Movimiento> MovimientosO;
+	    
+	@OneToMany(mappedBy = "cuentaDestino")
+	private List<Movimiento> MovimientosD;
 	
 	public String getIban() {
 		return iban;
@@ -58,12 +73,12 @@ public class Cuenta extends AbstractEntity {
 	public void setFechaCreacion(LocalDate fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
-	public Integer getTarjeta() {
+	/*public Integer getTarjeta() {
 		return tarjeta;
 	}
 	public void setTarjeta(Integer tarjeta) {
 		this.tarjeta = tarjeta;
-	}
+	}*/
 	
 	
 }
