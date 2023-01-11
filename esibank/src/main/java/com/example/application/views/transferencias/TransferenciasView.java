@@ -1,9 +1,16 @@
 package com.example.application.views.transferencias;
 
+import com.example.application.data.entity.Movimiento;
+import com.example.application.data.entity.User;
+import com.example.application.data.service.CuentaService;
+import com.example.application.data.service.MovimientoService;
+import com.example.application.data.service.UserService;
+import com.example.application.security.AuthenticatedUser;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.charts.model.Label;
 import com.vaadin.flow.component.customfield.CustomField;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
@@ -11,74 +18,119 @@ import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.select.Select;
+import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.auth.AccessAnnotationChecker;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Optional;
+
 import javax.annotation.security.PermitAll;
 
 @PageTitle("Transferencias")
 @Route(value = "Transferencias", layout = MainLayout.class)
 @PermitAll
 public class TransferenciasView extends Div {
+	
+	private AuthenticatedUser authenticatedUser;
+	private UserService userservice;
+	private CuentaService cuentaservice;
+	private MovimientoService movimientoservice;
 
-    private TextField cardNumber;
-    private TextField cardholderName;
-    private Select<Integer> month;
-    private Select<Integer> year;
-    private ExpirationDateField expiration;
-    private PasswordField csc;
+	TextField cuentaDestino = new TextField("Cuenta Destino");
+	TextField concepto = new TextField("Concepto");
+    Select<String> cuentaSelect = new Select<String>("Cuenta Origen");
+    NumberField cantidad = new NumberField("Cantidad a enviar");
+    TextField txtfechaActual = new TextField("Fecha");
+    private Date fechaActual = new Date();
+    Binder<Movimiento> binder = new Binder<>(Movimiento.class);
     private Button cancel;
     private Button submit;
 
-    /**
-     * Matches Visa, MasterCard, American Express, Diners Club, Discover, and JCB
-     * cards. See https://stackoverflow.com/a/9315696
-     */
-    private String CARD_REGEX = "^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35d{3})d{11})$";
-
-    public TransferenciasView() {
+    public TransferenciasView(AuthenticatedUser authenticatedUser, UserService userservice, CuentaService cuentaservice, MovimientoService movimientoservice) {
         addClassName("transferencias-view");
-
+        
+        this.authenticatedUser = authenticatedUser;
+        this.userservice = userservice;
+        this.cuentaservice = cuentaservice;
+        this.movimientoservice = movimientoservice;
+        
+        Movimiento movActual = null;
+        
         add(createTitle());
         add(createFormLayout());
         add(createButtonLayout());
-
+        
+        binder.forField(concepto)
+        // Validator defined based on a lambda
+        // and an error message
+        .withValidator(
+        		concepto -> concepto.length() >= 3,
+            "El concepto debe tener al menos 3 caracteres de longitud")
+        .bind(Movimiento::getConcepto, Movimiento::setConcepto);
+        
+        binder.forField(cuentaSelect) 
+        .bind(Movimiento::getCuentao, Movimiento::setCuentao);
+                
+        binder.forField(cuentaDestino) 
+        .bind(Movimiento::getCuentad, Movimiento::setCuentad);
+        
+        binder.forField(cantidad) 
+        .withValidator(
+        		cantidad -> cantidad > 0,
+            "La cantidad debe ser mayor que 0");
+        
+        binder.forField(txtfechaActual);
+        
+        binder.setBean(movActual);
+       
         cancel.addClickListener(e -> {
-            Notification.show("Not implemented");
+            concepto.clear();
+            cuentaSelect.clear();
+            cuentaDestino.clear();
+            cantidad.clear();
+            txtfechaActual.clear();
         });
+        
         submit.addClickListener(e -> {
-            Notification.show("Not implemented");
+        	if (binder.validate().isOk()) {
+                // person is always up-to-date as long as
+                // there are no validation errors
+            	movimientoservice.update(movActual);
+            }
         });
     }
 
     private Component createTitle() {
-        return new H3("Credit Card");
+        return new H3("Realizar Transferencia");
     }
 
     private Component createFormLayout() {
-        cardNumber = new TextField("Credit card number");
-        cardNumber.setPlaceholder("1234 5678 9123 4567");
-        cardNumber.setPattern(CARD_REGEX);
-        cardNumber.setAllowedCharPattern("[\\d ]");
-        cardNumber.setRequired(true);
-        cardNumber.setErrorMessage("Please enter a valid credit card number");
-
-        cardholderName = new TextField("Cardholder name");
-
-        month = new Select<>();
-        month.setPlaceholder("Month");
-        month.setItems(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
-
-        year = new Select<>();
-        year.setPlaceholder("Year");
-        year.setItems(20, 21, 22, 23, 24, 25);
-
-        expiration = new ExpirationDateField("Expiration date", month, year);
-        csc = new PasswordField("CSC");
-
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+    	String sFecha = sdf.format(fechaActual);
+    	
+    	concepto = new TextField("Concepto");
+    	
+    	cuentaSelect = new Select<>();
+    	cuentaSelect.setPlaceholder("Seleccionar tu cuenta");
+    	cuentaSelect.setItems(); //Consulta a la BD
+    	
+    	cuentaDestino = new TextField("Cuenta de destino");
+    	
+    	cantidad = new NumberField("Cantidad a enviar");
+    	
+    	txtfechaActual = new TextField("Fecha de realización");
+        txtfechaActual.setPlaceholder(sFecha);
+        txtfechaActual.setReadOnly(true);
+                
+      
         FormLayout formLayout = new FormLayout();
-        formLayout.add(cardNumber, cardholderName, expiration, csc);
+        formLayout.add(concepto, cuentaSelect, cuentaDestino, cantidad, txtfechaActual);
         return formLayout;
     }
 
@@ -86,10 +138,10 @@ public class TransferenciasView extends Div {
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.addClassName("button-layout");
 
-        submit = new Button("Submit");
+        submit = new Button("Enviar");
         submit.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-        cancel = new Button("Cancel");
+        cancel = new Button("Cancelar");
 
         buttonLayout.add(submit);
         buttonLayout.add(cancel);
