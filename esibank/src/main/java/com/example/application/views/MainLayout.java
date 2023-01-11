@@ -10,9 +10,11 @@ import com.example.application.views.inicio.InicioView;
 import com.example.application.views.noticias.NoticiasView;
 import com.example.application.views.perfil.PerfilView;
 import com.example.application.views.transferencias.TransferenciasView;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.avatar.Avatar;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
@@ -23,9 +25,11 @@ import com.vaadin.flow.component.html.Header;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.orderedlayout.Scroller;
+import com.vaadin.flow.dom.ThemeList;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
+import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import java.io.ByteArrayInputStream;
 import java.util.Optional;
@@ -43,7 +47,7 @@ public class MainLayout extends AppLayout {
     public MainLayout(AuthenticatedUser authenticatedUser, AccessAnnotationChecker accessChecker) {
         this.authenticatedUser = authenticatedUser;
         this.accessChecker = accessChecker;
-
+        
         setPrimarySection(Section.DRAWER);
         addDrawerContent();
         addHeaderContent();
@@ -55,8 +59,20 @@ public class MainLayout extends AppLayout {
 
         viewTitle = new H2();
         viewTitle.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
+        
+        Button toggleButton = new Button("Cambiar modo", click -> {
+            ThemeList themeList = UI.getCurrent().getElement().getThemeList(); 
 
-        addToNavbar(true, toggle, viewTitle);
+            if (themeList.contains(Lumo.DARK)) { 
+                themeList.remove(Lumo.DARK);
+            } else {
+                themeList.add(Lumo.DARK);
+            }
+        });
+
+       //add(toggleButton);
+
+        addToNavbar(true, toggle, viewTitle,toggleButton);
     }
 
     private void addDrawerContent() {
@@ -73,7 +89,7 @@ public class MainLayout extends AppLayout {
         // AppNav is not yet an official component.
         // For documentation, visit https://github.com/vaadin/vcf-nav#readme
         AppNav nav = new AppNav();
-
+        
         if (accessChecker.hasAccess(InicioView.class)) {
             nav.addItem(new AppNavItem("Inicio", InicioView.class, "la la-home"));
 
@@ -98,7 +114,7 @@ public class MainLayout extends AppLayout {
             nav.addItem(new AppNavItem("Noticias", NoticiasView.class, "la la-th-list"));
 
         }
-
+              
         return nav;
     }
     

@@ -21,7 +21,6 @@ import org.springframework.context.annotation.Bean;
  *
  */
 @SpringBootApplication
-@Theme(value = "esibank", variant = Lumo.DARK)
 @Push
 @NpmPackage(value = "line-awesome", version = "1.3.0")
 @NpmPackage(value = "@vaadin-component-factory/vcf-nav", version = "1.0.6")
