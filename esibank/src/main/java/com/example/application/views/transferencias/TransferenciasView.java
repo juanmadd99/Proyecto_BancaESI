@@ -1,5 +1,6 @@
 package com.example.application.views.transferencias;
 
+import com.example.application.data.entity.Cuenta;
 import com.example.application.data.entity.Movimiento;
 import com.example.application.data.entity.User;
 import com.example.application.data.service.CuentaService;
@@ -12,6 +13,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.charts.model.Label;
 import com.vaadin.flow.component.customfield.CustomField;
+import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
@@ -22,12 +24,17 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.converter.LocalDateTimeToDateConverter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
 
 import javax.annotation.security.PermitAll;
@@ -44,13 +51,18 @@ public class TransferenciasView extends Div {
 
 	TextField cuentaDestino = new TextField("Cuenta Destino");
 	TextField concepto = new TextField("Concepto");
-    Select<String> cuentaSelect = new Select<String>("Cuenta Origen");
+    Select<String> cuentaSelect = new Select<String>("Cuenta Origen"); //CONSULTA de todos los IBAN de ese user.
     NumberField cantidad = new NumberField("Cantidad a enviar");
-    TextField txtfechaActual = new TextField("Fecha");
-    private Date fechaActual = new Date();
+    DatePicker datefechaActual = new DatePicker();
+    TextField datefechaActual2 = new TextField("fechap");
+    private LocalDate fechaActual = LocalDate.now();
     Binder<Movimiento> binder = new Binder<>(Movimiento.class);
     private Button cancel;
     private Button submit;
+    ///
+    LocalDate hoy = LocalDate.now();
+    Date ayer = new Date();
+    Cuenta prueba;
 
     public TransferenciasView(AuthenticatedUser authenticatedUser, UserService userservice, CuentaService cuentaservice, MovimientoService movimientoservice) {
         addClassName("transferencias-view");
@@ -60,7 +72,7 @@ public class TransferenciasView extends Div {
         this.cuentaservice = cuentaservice;
         this.movimientoservice = movimientoservice;
         
-        Movimiento movActual = null;
+        Movimiento movActual =  new Movimiento("pruebaJava",hoy, (float) 0.00, "", "", prueba,prueba);
         
         add(createTitle());
         add(createFormLayout());
@@ -80,13 +92,14 @@ public class TransferenciasView extends Div {
         binder.forField(cuentaDestino) 
         .bind(Movimiento::getCuentad, Movimiento::setCuentad);
         
+        
+        datefechaActual.setValue(hoy);
+        binder.forField(datefechaActual);
+        
         binder.forField(cantidad) 
         .withValidator(
         		cantidad -> cantidad > 0,
             "La cantidad debe ser mayor que 0");
-        
-        binder.forField(txtfechaActual);
-        
         binder.setBean(movActual);
        
         cancel.addClickListener(e -> {
@@ -94,7 +107,6 @@ public class TransferenciasView extends Div {
             cuentaSelect.clear();
             cuentaDestino.clear();
             cantidad.clear();
-            txtfechaActual.clear();
         });
         
         submit.addClickListener(e -> {
@@ -102,6 +114,7 @@ public class TransferenciasView extends Div {
                 // person is always up-to-date as long as
                 // there are no validation errors
             	movimientoservice.update(movActual);
+            	movActual.setdFecha(hoy);
             }
         });
     }
@@ -111,26 +124,16 @@ public class TransferenciasView extends Div {
     }
 
     private Component createFormLayout() {
-    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-    	String sFecha = sdf.format(fechaActual);
     	
     	concepto = new TextField("Concepto");
-    	
     	cuentaSelect = new Select<>();
     	cuentaSelect.setPlaceholder("Seleccionar tu cuenta");
     	cuentaSelect.setItems(); //Consulta a la BD
-    	
     	cuentaDestino = new TextField("Cuenta de destino");
-    	
     	cantidad = new NumberField("Cantidad a enviar");
     	
-    	txtfechaActual = new TextField("Fecha de realización");
-        txtfechaActual.setPlaceholder(sFecha);
-        txtfechaActual.setReadOnly(true);
-                
-      
         FormLayout formLayout = new FormLayout();
-        formLayout.add(concepto, cuentaSelect, cuentaDestino, cantidad, txtfechaActual);
+        formLayout.add(concepto, cuentaSelect, cuentaDestino, cantidad);
         return formLayout;
     }
 

@@ -3,6 +3,7 @@ package com.example.application.data.entity;
 import com.example.application.data.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Column;
@@ -21,7 +22,7 @@ import javax.persistence.Transient;
 @Table(name = "movimiento")
 public class Movimiento extends AbstractEntity {
 	private String concepto;
-	private Date dFecha;
+	private LocalDate dFecha;
 	private Float fValor;
 	private String cuentao; //Darle valor correspondiente con el constructor Cuenta->getIBAN();
 	private String cuentad;	//Darle valor correspondiente con el constructor Cuenta->getIBAN();
@@ -40,10 +41,10 @@ public class Movimiento extends AbstractEntity {
 	public void setConcepto(String concepto) {
 		this.concepto = concepto;
 	}
-	public Date getdFecha() {
+	public LocalDate getdFecha() {
 		return dFecha;
 	}
-	public void setdFecha(Date dFecha) {
+	public void setdFecha(LocalDate dFecha) {
 		this.dFecha = dFecha;
 	}
 	public Float getfValor() {
@@ -65,7 +66,6 @@ public class Movimiento extends AbstractEntity {
 		this.cuentad = cuentad;
 	}
 	
-	
 	public Cuenta getCuenta_origen() {
 		return cuenta_origen;
 	}
@@ -79,9 +79,7 @@ public class Movimiento extends AbstractEntity {
 		this.cuenta_destino = cuenta_destino;
 	}
 	
-	
-	/*
-	public Movimiento(String concepto, Date dFecha, Float fValor, String cuentao, String cuentad, Cuenta cuenta_origen,
+	public Movimiento(String concepto, LocalDate dFecha, Float fValor, String cuentao, String cuentad, Cuenta cuenta_origen,
 			Cuenta cuenta_destino) {
 		super();
 		this.concepto = concepto;
@@ -92,5 +90,9 @@ public class Movimiento extends AbstractEntity {
 		this.cuenta_origen = cuenta_origen;
 		this.cuenta_destino = cuenta_destino;
 	}
-	*/
+	
+	public Movimiento() {
+		
+	}
+	
 }
