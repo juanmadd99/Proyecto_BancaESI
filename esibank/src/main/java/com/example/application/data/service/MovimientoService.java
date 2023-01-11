@@ -3,6 +3,7 @@ package com.example.application.data.service;
 import com.example.application.data.entity.Movimiento;
 import com.example.application.data.entity.Tarjeta;
 import com.example.application.data.entity.User;
+import com.example.application.data.entity.Cuenta;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

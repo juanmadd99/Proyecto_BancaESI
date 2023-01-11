@@ -139,11 +139,9 @@ public class CuentaView extends Div {
     public static class Filters extends Div implements Specification<Movimiento> {
 
         private final TextField concepto = new TextField("concepto");
-        //private final NumberField fValor = new NumberField("Valor");
-
         private final DatePicker startDate = new DatePicker("Fecha de realizacion");
-        private final TextField cuentaOrigen = new TextField("Cuenta origen");
-        private final TextField cuentaDestino = new TextField("Cuenta destino");
+        private final TextField cuentao = new TextField("cuentao");
+        private final TextField cuentad = new TextField("cuentad");
         private final DatePicker endDate = new DatePicker();
 
         public Filters(Runnable onSearch) {
@@ -167,8 +165,8 @@ public class CuentaView extends Div {
             	//fValor.clear();
                 startDate.clear();
                 endDate.clear();
-                cuentaOrigen.clear();
-                cuentaDestino.clear();
+                cuentao.clear();
+                cuentad.clear();
                 onSearch.run();
             });
             Button searchBtn = new Button("Search");
@@ -178,7 +176,7 @@ public class CuentaView extends Div {
             actions.addClassName(LumoUtility.Gap.SMALL);
             actions.addClassName("actions");
 
-            add(concepto, createDateRangeFilter(), cuentaOrigen, cuentaDestino, actions);
+            add(concepto, createDateRangeFilter(), cuentao, cuentad, actions);
         }
 
         private Component createDateRangeFilter() {
@@ -213,16 +211,16 @@ public class CuentaView extends Div {
                 predicates.add(criteriaBuilder.or(conceptoMatch));
             }
 
-            if (!cuentaOrigen.isEmpty()) {
-                String lowerCaseFilter = cuentaOrigen.getValue().toLowerCase();
-                Predicate cuentaOrigenMATCH = criteriaBuilder.like(criteriaBuilder.lower(root.get("cuentaOrigen")),
+            if (!cuentao.isEmpty()) {
+                String lowerCaseFilter = cuentao.getValue().toLowerCase();
+                Predicate cuentaOrigenMATCH = criteriaBuilder.like(criteriaBuilder.lower(root.get("cuentao")),
                         lowerCaseFilter + "%");
                 predicates.add(criteriaBuilder.or(cuentaOrigenMATCH));
             }
 
-            if (!cuentaDestino.isEmpty()) {
-                String lowerCaseFilter = cuentaDestino.getValue().toLowerCase();
-                Predicate cuentaDestinoMATCH = criteriaBuilder.like(criteriaBuilder.lower(root.get("cuentaDestino")),
+            if (!cuentad.isEmpty()) {
+                String lowerCaseFilter = cuentad.getValue().toLowerCase();
+                Predicate cuentaDestinoMATCH = criteriaBuilder.like(criteriaBuilder.lower(root.get("cuentad")),
                         lowerCaseFilter + "%");
                 predicates.add(criteriaBuilder.or(cuentaDestinoMATCH));
             }
@@ -295,8 +293,8 @@ public class CuentaView extends Div {
         grid.addColumn("concepto").setAutoWidth(true);
         grid.addColumn("fValor").setAutoWidth(true);
         grid.addColumn("dFecha").setAutoWidth(true);
-        grid.addColumn("cuentaOrigen").setAutoWidth(true);
-        grid.addColumn("cuentaDestino").setAutoWidth(true);
+        grid.addColumn("cuentao").setAutoWidth(true);
+        grid.addColumn("cuentad").setAutoWidth(true);
 
         grid.setItems(query -> movimientoService.list(
                 PageRequest.of(query.getPage(), query.getPageSize(), VaadinSpringDataHelpers.toSpringDataSort(query)),

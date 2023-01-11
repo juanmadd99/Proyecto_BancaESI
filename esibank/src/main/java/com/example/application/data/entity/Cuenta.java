@@ -43,10 +43,10 @@ public class Cuenta extends AbstractEntity {
 	@OneToMany(mappedBy = "cuenta")
    	private List<Tarjeta> Tarjetas;
 	
-	@OneToMany(mappedBy = "cuentaOrigen")
+	@OneToMany(mappedBy = "cuenta_origen")
 	private List<Movimiento> MovimientosO;
 	    
-	@OneToMany(mappedBy = "cuentaDestino")
+	@OneToMany(mappedBy = "cuenta_destino")
 	private List<Movimiento> MovimientosD;
 	
 	public String getIban() {
@@ -73,12 +73,27 @@ public class Cuenta extends AbstractEntity {
 	public void setFechaCreacion(LocalDate fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
-	/*public Integer getTarjeta() {
-		return tarjeta;
+	public User getUser() {
+		return user;
 	}
-	public void setTarjeta(Integer tarjeta) {
-		this.tarjeta = tarjeta;
-	}*/
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	
+	public List<Movimiento> getMovimientosO() {
+		return MovimientosO;
+	}
+	public void setMovimientosO(List<Movimiento> movimientosO) {
+		MovimientosO = movimientosO;
+	}
+	public List<Movimiento> getMovimientosD() {
+		return MovimientosD;
+	}
+	public void setMovimientosD(List<Movimiento> movimientosD) {
+		MovimientosD = movimientosD;
+	}
+	
 	
 	
 }
